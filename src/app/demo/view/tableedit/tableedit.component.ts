@@ -16,6 +16,11 @@ import { UploadFileService } from 'src/app/services/upload-file.service';
   ],
 })
 export class TableeditComponent implements OnChanges {
+  productDialog: boolean;
+  product: any;
+  submitted: boolean;
+
+
   constructor(
     private uploadFileService: UploadFileService,
     private messageService: MessageService
@@ -27,14 +32,17 @@ export class TableeditComponent implements OnChanges {
   @Output() onDelete = new EventEmitter();
   @Output() onEdit = new EventEmitter();
 
-  public headers: string[] = [];
+  @Output() onSave = new EventEmitter();
 
+  public headers: string[] = [];
+  public data: string[] = [];
   clonedProducts: { [s: string]: any } = {};
+  
 //oninit is no longer available here
   ngOnChanges() {
     this.headers = Object.keys(this.products[0]);
   }
-
+ 
   onRowEditInit(product: any) {
     this.clonedProducts[product.id] = { ...product };
   }
@@ -78,5 +86,12 @@ export class TableeditComponent implements OnChanges {
   }
 
   onRowEditCancel(product: any, index: number) {}
+  openNew() {
+    this.product={};
+    this.submitted = false;
+    this.productDialog = true;
+}
+
+
 
 }
