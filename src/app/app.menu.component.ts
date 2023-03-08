@@ -59,7 +59,7 @@ export class AppMenuComponent implements OnInit {
             //     ]
             // },
             {
-                label: 'Pages', icon: 'pi pi-fw pi-copy', routerLink: ['/pages'],
+                label: 'Connexion', icon: 'pi pi-fw pi-copy', routerLink: ['/pages'],
                 items: [
                     // {label: 'Crud', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/crud']},
                     // {label: 'Calendar', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/pages/calendar']},
@@ -118,17 +118,17 @@ export class AppMenuComponent implements OnInit {
             //         }
             //     ]
             // },
-            {
-                label: 'Get Started', icon: 'pi pi-fw pi-download',
-                items: [
-                    {
-                        label: 'Documentation', icon: 'pi pi-fw pi-file', routerLink: ['/documentation']
-                    },
-                    {
-                        label: 'Buy Now', icon: 'pi pi-fw pi-money-bill', url: ['https://www.primefaces.org/store']
-                    }
-                ]
-            }
+            // {
+            //     label: 'Get Started', icon: 'pi pi-fw pi-download',
+            //     items: [
+            //         {
+            //             label: 'Documentation', icon: 'pi pi-fw pi-file', routerLink: ['/documentation']
+            //         },
+            //         {
+            //             label: 'Buy Now', icon: 'pi pi-fw pi-money-bill', url: ['https://www.primefaces.org/store']
+            //         }
+            //     ]
+            // }
         ];
     }
 }
