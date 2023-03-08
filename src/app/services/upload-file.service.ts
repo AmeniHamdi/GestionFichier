@@ -42,7 +42,10 @@ export class UploadFileService {
    authService(type:any,user:user) : Observable<any>{
     return this.http.post(`${this.authUrl}/${type}`,user);
   }
-  
+   //postcontrat
+   RegisterService(type:any,user:user) : Observable<any>{
+    return this.http.post(`${this.authUrl}/${type}`,user);
+  }
 
   
   

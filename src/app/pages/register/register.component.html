@@ -1,0 +1,35 @@
+<div class="login-body">
+    <div class="login-panel"></div>
+
+    <div class="login-content">
+        <img src="assets/layout/images/logo-black.png" alt="babylon-layout"/>
+
+        <h1><span>SIGN Up</span> TO BABYLON</h1>
+        <p>Welcome, please use the form to sign-Up.</p>
+
+        <div class="login-input-wrapper">
+            <input type="text" autocomplete="off" placeholder="First Name"  [(ngModel)]="userInfo.firstName" pInputText>
+            <i class="pi pi-user"></i>
+        </div>
+        <div class="login-input-wrapper">
+            <input type="text" autocomplete="off" placeholder="Last Name" [(ngModel)]="userInfo.lastName"  pInputText>
+            <i class="pi pi-user"></i>
+        </div>
+
+        <div class="login-input-wrapper">
+            <input type="email" autocomplete="off" placeholder="Email" [(ngModel)]="userInfo.email"  pInputText>
+            <i class="pi pi-at"></i>
+        </div>
+
+        
+
+        <div class="login-input-wrapper">
+            <input type="password" autocomplete="off" placeholder="Password" [(ngModel)]="userInfo.password
+            " pInputText>
+            <i class="pi pi-lock"></i>
+        </div>
+
+        <button [routerLink]="['/']"  pButton type="button" label="Sign Up"  (click)="saveUser()" ></button>
+        
+    </div>
+</div>
