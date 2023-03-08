@@ -22,26 +22,47 @@
                     <h4>Upload your Document</h4>
                 </div>
                 <div class="card">
+                    <div class="grid">
                 <form [formGroup]="form">
                     <div class="form-check">
     
                             <h6>Choose you File Type</h6>
                         
                         <br />
-                        <input class="form-check-input" type="radio" name="document" value="contrat"
+                        <!-- <input class="form-check-input" type="radio" name="document" value="contrat"
                             formControlName="document">
-                        <label class="form-check-label">Contrat</label>
-                        <br />
-                        <input class="form-check-input" type="radio" name="document" value="tier"
-                            formControlName="document">
-                        <label class="form-check-label">Tier</label>
-                        <br />
-                        <input class="form-check-input" type="radio" name="document" value="dossier"
-                            formControlName="document">
-                        <label class="form-check-label">Dossier</label>
+                        <label class="form-check-label">Contrat</label> -->
 
+                        <div class="col-12 md:col-4">
+                            <div class="field-radiobutton">
+                                <p-radioButton name="document" value="contrat"formControlName="document"></p-radioButton>
+                                <label for="city1">Contrat</label>
+                            </div>
+                        </div>
+                        <br />
+                        <!-- <input class="form-check-input" type="radio" name="document" value="tier"
+                            formControlName="document">
+                        <label class="form-check-label">Tier</label> -->
+                        <div class="col-12 md:col-4">
+                            <div class="field-radiobutton">
+                                <p-radioButton name="document" value="tier" formControlName="document"></p-radioButton>
+                                <label for="city1">Tier</label>
+                            </div>
+                        </div>
+                        <br />
+                        <!-- <input class="form-check-input" type="radio" name="document" value="dossier"
+                            formControlName="document">
+                        <label class="form-check-label">Dossier</label> -->
+                        <div class="col-12 md:col-4">
+                            <div class="field-radiobutton">
+                                <p-radioButton name="document" value="dossier" formControlName="document"></p-radioButton>
+                                <label for="city1">Dossier</label>
+                            </div>
+                        </div>
+                    
                     </div>
                 </form>
+                
             </div>
                 <div *ngIf="currentFile" class="progress">
                     <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"

@@ -1,6 +1,6 @@
 <div class="layout-dashboard">
     <div class="grid">
-        <div class="col-12 lg:col-6 xl:col-3">
+        <!-- <div class="col-12 lg:col-6 xl:col-3">
             <div class="overview-box sales">
                 <i class="overview-icon pi pi-dollar"></i>
                 <span class="overview-title">Sales</span>
@@ -51,15 +51,44 @@
                     18% more than yesterday
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="col-12 lg:col-8">
+         <div class="col-12 lg:col-8">
             <div class="card card-w-title statistics">
                 <h5>Statistics</h5>
                 <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
             </div>
         </div>
+        <div class="col-12 md:col-12 lg:col-4">
+            <div class="card card-w-title tasks">
+                <h5>Tasks</h5>
+                <ul>
+                    <li>
+                        <p-checkbox binary="true"></p-checkbox>
+                        <span>Upload Reports</span>
+                        <span class="task-badge red"></span>
+                    </li>
+                    <li>
+                        <p-checkbox binary="true"></p-checkbox>
+                        <span>Pay Invoices</span>
+                        <span class="task-badge orange"></span>
+                    </li>
+                    <li>
+                        <p-checkbox binary="true"></p-checkbox>
+                        <span>Kate's Birthday</span>
+                        <span class="task-badge orange"></span>
+                    </li>
+                    <li>
+                        <p-checkbox binary="true"></p-checkbox>
+                        <span>Client Meeting</span>
+                        <span class="task-badge green"></span>
+                    </li>
+                   
+                </ul>
+            </div>
+        </div>
 
+        <!--
         <div class="col-12 lg:col-4">
             <div class="user-card card">
                 <div class="user-card-header">
@@ -238,9 +267,9 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div> -->
 
-        <div class="col-12 xl:col-6">
+        <!-- <div class="col-12 xl:col-6">
             <div class="card card-w-title timeline">
                 <h5>Timeline</h5>
                 <ul>
@@ -401,7 +430,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="col-12 md:col-12 lg:col-12">
             <div class="card card-w-title">
