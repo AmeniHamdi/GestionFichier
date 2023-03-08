@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { user } from 'src/app/demo/domain/user.model';
 import { UploadFileService } from 'src/app/services/upload-file.service';
 
@@ -8,6 +10,16 @@ import { UploadFileService } from 'src/app/services/upload-file.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+
+
+  SignUpForm : FormGroup= new FormGroup({
+    
+    firstName: new FormControl ('', Validators.required),
+    lastName:new FormControl ('', Validators.required),
+    email:new FormControl ('', [Validators.required,Validators.email]),
+    password: new FormControl ('',[Validators.required , Validators.minLength(8)])
+
+  })
   userInfo : user={firstName:"",lastName:"",password:"",email:""};
 
 
@@ -17,7 +29,7 @@ export class RegisterComponent {
 
 
   constructor(
-    private uploadFileService: UploadFileService
+    private uploadFileService: UploadFileService ,private router: Router
   ) { }
 
   // signin(){
@@ -30,7 +42,11 @@ export class RegisterComponent {
 
   
   saveUser() {
-    
+    if(this.SignUpForm.valid)
+         {
+          this.router.navigate(['/']);
+         }
+
     console.log(this.userInfo.email);
     console.log(this.userInfo.firstName);
     
@@ -48,6 +64,8 @@ export class RegisterComponent {
           ("register", this.userInfo).subscribe((response: any) => {
             console.log(response);
          });
+
+         
         
       }
       

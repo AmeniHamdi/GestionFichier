@@ -1,6 +1,6 @@
-import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of, throwError } from 'rxjs';
 import { user } from '../demo/domain/user.model';
 
 @Injectable({
@@ -38,11 +38,25 @@ export class UploadFileService {
   getAllObjects(data: any): Observable<any> {
     return this.http.get(`${this.baseUrl}/${data}`);
   }
-   //postcontrat
+   //auth service
    authService(type:any,user:user) : Observable<any>{
-    return this.http.post(`${this.authUrl}/${type}`,user);
+    return this.http.post(`${this.authUrl}/${type}`,user)
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+          // client-side error
+          errorMessage = `Error: ${error.status}`;
+        } else {
+          // server-side error
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        }
+    //    console.error("hhhhhhhhh",errorMessage);
+        return of({error: true});
+      })
+    );
   }
-   //postcontrat
+   //addUser
    RegisterService(type:any,user:user) : Observable<any>{
     return this.http.post(`${this.authUrl}/${type}`,user);
   }
