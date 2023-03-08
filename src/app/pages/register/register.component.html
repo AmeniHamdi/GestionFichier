@@ -1,35 +1,48 @@
 <div class="login-body">
-    <div class="login-panel"></div>
+    <form [formGroup]="SignUpForm" >
+        <div class="login-panel"></div>
 
-    <div class="login-content">
-        <img src="assets/layout/images/logo-black.png" alt="babylon-layout"/>
+        <div class="login-content">
+            <img src="assets/layout/images/logo-black.png" alt="babylon-layout" />
 
-        <h1><span>SIGN Up</span> TO BABYLON</h1>
-        <p>Welcome, please use the form to sign-Up.</p>
+            <h1><span>SIGN Up</span> TO BABYLON</h1>
+            <p>Welcome, please use the form to sign-Up.</p>
 
-        <div class="login-input-wrapper">
-            <input type="text" autocomplete="off" placeholder="First Name"  [(ngModel)]="userInfo.firstName" pInputText>
-            <i class="pi pi-user"></i>
-        </div>
-        <div class="login-input-wrapper">
-            <input type="text" autocomplete="off" placeholder="Last Name" [(ngModel)]="userInfo.lastName"  pInputText>
-            <i class="pi pi-user"></i>
-        </div>
+            <div class="login-input-wrapper">
+                <input type="text" autocomplete="off" placeholder="First Name" formControlName="firstName" [(ngModel)]="userInfo.firstName"
+                    pInputText>
+                <i class="pi pi-user"></i>
+                <span *ngIf="SignUpForm.get('firstName')?.errors?.['required'] && SignUpForm.get('firstName')?.touched  " class="help-block" > First Name required</span>
 
-        <div class="login-input-wrapper">
-            <input type="email" autocomplete="off" placeholder="Email" [(ngModel)]="userInfo.email"  pInputText>
-            <i class="pi pi-at"></i>
-        </div>
+            </div>
+            <div class="login-input-wrapper">
+                <input type="text" autocomplete="off" placeholder="Last Name" formControlName="lastName" [(ngModel)]="userInfo.lastName"
+                    pInputText >
+                <i class="pi pi-user"></i>
+                <span *ngIf="SignUpForm.get('lastName')?.errors?.['required'] && SignUpForm.get('lastName')?.touched  " class="help-block" > Last Name required</span>
+            </div>
 
-        
+            <div class="login-input-wrapper">
+                <input type="email" autocomplete="off" placeholder="Email" formControlName="email" [(ngModel)]="userInfo.email" pInputText>
+                <i class="pi pi-at"></i>
+                <span *ngIf="!SignUpForm.get('email')?.errors?.['required'] && SignUpForm.get('email')?.touched && SignUpForm.get('email')?.invalid " class="help-block" > Please enter a valid email</span>
+                <span *ngIf="SignUpForm.get('email')?.errors?.['required'] && SignUpForm.get('email')?.touched  " class="help-block" > email required</span>
+               
+            </div>
 
-        <div class="login-input-wrapper">
-            <input type="password" autocomplete="off" placeholder="Password" [(ngModel)]="userInfo.password
+
+
+            <div class="login-input-wrapper">
+                <input type="password" autocomplete="off" placeholder="Password" formControlName="password" [(ngModel)]="userInfo.password
             " pInputText>
-            <i class="pi pi-lock"></i>
-        </div>
+                <i class="pi pi-lock"></i>
+                <span *ngIf="SignUpForm.get('password')?.errors?.['required'] && SignUpForm.get('password')?.touched  " class="help-block" > password required</span>
+                <span *ngIf=" SignUpForm.get('password')?.value!='' && SignUpForm.get('password')?.errors?.['minlength'].requiredLength > SignUpForm.get('password')?.errors?.['minlength'].actualLength " class="help-block" > password less then 8</span>
 
-        <button [routerLink]="['/']"  pButton type="button" label="Sign Up"  (click)="saveUser()" ></button>
-        
-    </div>
+            </div>
+
+            <button  pButton type="button" label="Sign Up" (click)="saveUser()"></button>
+
+        </div>
+    </form>
 </div>
