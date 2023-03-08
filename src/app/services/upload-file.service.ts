@@ -37,6 +37,8 @@ export class UploadFileService {
     return this.http.get(`${this.baseUrl}/${data}`);
   }
 
-  
+  save(type: string, toAdd: any) {
+    return this.http.post(`${this.baseUrl}/${type}`, toAdd);
+  } 
   
 }
