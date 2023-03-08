@@ -8,15 +8,15 @@
         <p>Welcome, please use the form to sign-in.</p>
 
         <div class="login-input-wrapper">
-            <input type="text" autocomplete="off" placeholder="Username" pInputText>
+            <input type="text" autocomplete="off" placeholder="Username"  [(ngModel)]="email" pInputText>
             <i class="pi pi-user"></i>
         </div>
 
         <div class="login-input-wrapper">
-            <input type="password" autocomplete="off" placeholder="Password" pInputText>
+            <input type="password" autocomplete="off" placeholder="Password" [(ngModel)]="password" pInputText>
             <i class="pi pi-lock"></i>
         </div>
 
-        <button [routerLink]="['/']"  pButton type="button" label="Sign In"></button>
+        <button [routerLink]="['/']"  pButton type="button" label="Sign In" (click)="saveUser()"></button>
     </div>
 </div>

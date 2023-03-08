@@ -31,6 +31,7 @@ import {AppInvoiceComponent} from './pages/app.invoice.component';
 import {AppHelpComponent} from './pages/app.help.component';
 import {AppWizardComponent} from './pages/app.wizard.component';
 import {BlocksComponent} from './blocks/blocks/blocks.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
     imports: [
@@ -71,6 +72,7 @@ import {BlocksComponent} from './blocks/blocks/blocks.component';
             {path: 'access', component: AppAccessdeniedComponent},
             {path: 'notfound', component: AppNotfoundComponent},
             {path: 'login', component: AppLoginComponent},
+            {path: 'register', component: RegisterComponent },
             {path: 'wizard', component: AppWizardComponent},
             {path: '**', redirectTo: '/notfound'},
         ], {scrollPositionRestoration: 'enabled'})

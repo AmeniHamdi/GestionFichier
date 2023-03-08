@@ -148,6 +148,7 @@ import {ProductService} from './demo/service/productservice';
 import {BreadcrumbService} from './app.breadcrumb.service';
 import {MenuService} from './app.menu.service';
 import { TableeditComponent } from './demo/view/tableedit/tableedit.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
     imports: [
@@ -284,6 +285,7 @@ import { TableeditComponent } from './demo/view/tableedit/tableedit.component';
         BlockViewer,
         BlocksComponent,
         TableeditComponent,
+        RegisterComponent,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

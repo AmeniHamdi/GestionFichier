@@ -1,6 +1,7 @@
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { user } from '../demo/domain/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import { Observable } from 'rxjs';
 export class UploadFileService {
 
   private baseUrl = 'http://localhost:8086/api/csv';
+  private authUrl ='http://localhost:8086/auth';
   constructor(private http: HttpClient) { }
 
   //Upload a csv file
@@ -35,6 +37,14 @@ export class UploadFileService {
   // Get all files
   getAllObjects(data: any): Observable<any> {
     return this.http.get(`${this.baseUrl}/${data}`);
+  }
+   //postcontrat
+   authService(type:any,user:user) : Observable<any>{
+    return this.http.post(`${this.authUrl}/${type}`,user);
+  }
+   //postcontrat
+   RegisterService(type:any,user:user) : Observable<any>{
+    return this.http.post(`${this.authUrl}/${type}`,user);
   }
 
   
