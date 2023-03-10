@@ -4,7 +4,6 @@ import { HttpClient, HttpEvent, HttpRequest ,HttpErrorResponse} from '@angular/c
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { user } from '../demo/domain/user.model';
-import { catchError, map } from "rxjs/operators";
 import { Router } from '@angular/router';
 
 
