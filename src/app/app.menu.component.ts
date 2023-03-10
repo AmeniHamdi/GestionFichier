@@ -18,7 +18,7 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Home Page', icon: 'pi pi-fw pi-home',
                 items: [
-                    {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/']}
+                    {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/uikit']}
                 ]
             },
             {
@@ -65,7 +65,7 @@ export class AppMenuComponent implements OnInit {
                     // {label: 'Calendar', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/pages/calendar']},
                     // {label: 'Timeline', icon: 'pi pi-fw pi-calendar', routerLink: ['/pages/timeline']},
                     // {label: 'Landing', icon: 'pi pi-fw pi-globe', url: 'assets/pages/landing.html', target: '_blank'},
-                    {label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/login']},
+                    {label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/']},
                     {label: 'Sign Up', icon: 'pi pi-fw pi-sign-in', routerLink: ['/register']},
                     // {label: 'Invoice', icon: 'pi pi-fw pi-dollar', routerLink: ['/pages/invoice']},
                     // {label: 'Help', icon: 'pi pi-fw pi-question-circle', routerLink: ['/pages/help']},

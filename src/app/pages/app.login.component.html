@@ -10,6 +10,11 @@
             <img src="assets/layout/images/logo-black.png" alt="babylon-layout" />
 
 
+
+        <button [routerLink]="['/uikit']"  pButton type="button" label="Sign In" (click)="saveUser()"></button>
+    </div>
+</div>
+
             <div class="login-input-wrapper">
                 <input type="email" autocomplete="off" placeholder="email" formControlName="email" [(ngModel)]="userInfo.email" pInputText>
                 <i class="pi pi-user"></i>
