@@ -70,7 +70,7 @@ export class DashboardDemoComponent implements OnInit {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             datasets: [
                 {
-                    label: 'Sales',
+                    label: 'Uploads',
                     data: [12, 19, 3, 5, 2, 3, 9],
                     borderColor: [
                         '#7E57C2',
@@ -82,7 +82,19 @@ export class DashboardDemoComponent implements OnInit {
                     tension: .4
                 },
                 {
-                    label: 'Income',
+                    label: 'Contrat',
+                    data: [12, 19, 3, 5, 2, 3, 9],
+                    borderColor: [
+                        '#7E57C2',
+                    ],
+                    borderWidth: 3,
+                    borderDash: [5, 5],
+                    fill: false,
+                    pointRadius: 3,
+                    tension: .4
+                },
+                {
+                    label: 'Tiers',
                     data: [1, 2, 5, 3, 12, 7, 15],
                     backgroundColor: [
                         'rgba(187,222,251,0.2)',
@@ -95,7 +107,7 @@ export class DashboardDemoComponent implements OnInit {
                     tension: .4
                 },
                 {
-                    label: 'Expenses',
+                    label: 'Dossiers',
                     data: [7, 12, 15, 5, 3, 13, 21],
                     borderColor: [
                         '#FFB300',
@@ -149,7 +161,7 @@ export class DashboardDemoComponent implements OnInit {
 
         this.fullCalendarOptions = {
             plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-            initialDate: '2021-02-01',
+            initialDate: '2023-03-09',
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',

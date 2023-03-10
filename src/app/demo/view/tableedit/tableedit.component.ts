@@ -3,13 +3,13 @@ import {
     EventEmitter,
     Input,
     OnChanges,
-    OnInit,
     Output,
     SimpleChanges,
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { MessageService } from "primeng/api";
-import { firstValueFrom } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { MessageService, LazyLoadEvent, SortEvent } from "primeng/api";
+import { firstValueFrom, take } from "rxjs";
 import { UploadFileService } from "src/app/services/upload-file.service";
 
 @Component({
@@ -25,34 +25,38 @@ import { UploadFileService } from "src/app/services/upload-file.service";
     ],
 })
 export class TableeditComponent implements OnChanges {
-    productDialog: boolean;
-    product: any;
-    submitted: boolean;
-
-    constructor(
-        private uploadFileService: UploadFileService,
-        private messageService: MessageService
-    ) {}
-
     @Input() fileType: string = "";
     @Input() products: any;
+
+    @Input() totalRecords: number;
 
     @Output() onDelete = new EventEmitter();
     @Output() onEdit = new EventEmitter();
 
+    @Output() onLazyLoad = new EventEmitter<LazyLoadEvent>();
+    @Output() sortFunction= new EventEmitter<SortEvent>();
+    
     @Output() onSave = new EventEmitter();
-
+    productDialog: boolean;
+    product: any;
+    submitted: boolean;
     public headers: string[] = [];
     public data: string[] = [];
     clonedProducts: { [s: string]: any } = {};
-    addForm:FormGroup;
+    addForm: FormGroup;
+    globalFilter: true;
 
+    constructor(
+        private http: HttpClient,
+        private uploadFileService: UploadFileService,
+        private messageService: MessageService
+    ) {}
 
     //oninit is no longer available here
     ngOnChanges(changes: SimpleChanges) {
         if (!changes["products"]) return;
         this.headers = Object.keys(this.products[0]);
-        this.productDialog = false; 
+        this.productDialog = false;
         this.addForm = new FormGroup(
             this.headers.reduce((acc, header) => {
                 if (header !== "id") {
@@ -65,6 +69,14 @@ export class TableeditComponent implements OnChanges {
 
     onRowEditInit(product: any) {
         this.clonedProducts[product.id] = { ...product };
+    }
+
+    paramUpdate(event: LazyLoadEvent) {
+        this.onLazyLoad.emit(event);
+    }
+
+    customSort(event: SortEvent){
+        this.sortFunction.emit(event);
     }
 
     async onRowDelete(product: any) {
@@ -108,43 +120,38 @@ export class TableeditComponent implements OnChanges {
     }
 
     async saveProduct() {
-        if (this.addForm.invalid)return ;
-        const product= this.headers.reduce((acc,header) => {
-            if (header !=="id"){
-                acc[header]=this.addForm.get(header).value;
+        if (this.addForm.invalid) return;
+        const product = this.headers.reduce((acc, header) => {
+            if (header !== "id") {
+                acc[header] = this.addForm.get(header).value;
                 // console.log(header);
-                // console.log(acc);
+                //console.log(acc)
             }
             return acc;
-            },{});
-            
-            console.log(product);
-        try{
-            await firstValueFrom(this.uploadFileService.save(this.fileType,product)
+        }, {});
+
+        console.log(product);
+        try {
+            await firstValueFrom(
+                this.uploadFileService.save(this.fileType, product)
             );
             this.messageService.add({
                 severity: "success",
                 summary: "Success",
-                detail: `A new ${this.fileType} is added.`
-                ,});    
-        
+                detail: `A new ${this.fileType} is added.`,
+            });
+
             this.hideDialog();
-            this.submitted=true;
+            this.submitted = true;
             this.onSave.emit();
-}       catch (error: unknown) {
+        } catch (error: unknown) {
             this.messageService.add({
-            severity: "error",
-            summary: "Error",
-            detail: `Error while adding new ${this.fileType}`,
-        });
+                severity: "error",
+                summary: "Error",
+                detail: `Error while adding new ${this.fileType}`,
+            });
+        }
     }
-  }
-    
-
-
-
-    
-
     onRowEditCancel(product: any, index: number) {}
     openNew() {
         this.product = {};

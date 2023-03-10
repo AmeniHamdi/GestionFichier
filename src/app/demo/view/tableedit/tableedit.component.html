@@ -2,24 +2,33 @@
 <div class="card">
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>  
-                <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-                    <span class="p-input-icon-right">
-                        <input type="text" pInputText placeholder="Search"/>
-                        <i class="pi pi-search"></i>
-                    </span>
-                </div>  
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>              
         </ng-template>
     </p-toolbar>
     <div class="col-12 xl:col-12" >
-    <p-table [value]="products" dataKey="id" [paginator]="true" [rows]="5"  editMode="row" [tableStyle]="{'min-width': '50rem'}">
+    <p-table [value]="products" [scrollable]="true"  dataKey="id" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20,30]"  
+    editMode="row" [tableStyle]="{'min-width': '50rem'}" [lazy]="true" [totalRecords]="totalRecords" (onLazyLoad)="paramUpdate($event)"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]=true
+    [tableStyle]="{'min-width':'75rem'}" (sortFunction)="customSort($event)" [customSort]="true">
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="header" [style]="'width: ' + (100/ headers.length + 1) + '%'" *ngFor="let header of headers">{{ header }}
+                <th pSortableColumn="header" [style]="'width: ' + (100/ headers.length + 1) + '%'" *ngFor="let header of headers">
+                    {{ header }}
                     <p-sortIcon field="header"></p-sortIcon>
+                    <p-columnFilter type="text" field="header" display="menu"></p-columnFilter>
                 </th>
                 <th [style]="'width: ' + (100/ headers.length + 1) + '%'"></th>
             </tr>
+
         </ng-template>
         <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
             <tr [pEditableRow]="product">

@@ -1,7 +1,10 @@
-import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest ,HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { user } from '../demo/domain/user.model';
+import { catchError, map } from "rxjs/operators";
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,8 @@ export class UploadFileService {
 
   private baseUrl = 'http://localhost:8086/api/csv';
   private authUrl ='http://localhost:8086/auth';
-  constructor(private http: HttpClient) { }
+  
+  constructor(private http: HttpClient,private router: Router) { }
 
   //Upload a csv file
   upload(file: File , data: any): Observable<HttpEvent<any>>{
@@ -25,6 +29,11 @@ export class UploadFileService {
 
       return this.http.request(req);
   }
+    // Add a new Row
+    save(type: string, toAdd: any) {
+      return this.http.post(`${this.baseUrl}/${type}`, toAdd);
+    } 
+
   // Delete a row in my table
   delete(type: string, id: number) {
     return this.http.delete(`${this.baseUrl}/${type}/${id}`);
@@ -34,21 +43,49 @@ export class UploadFileService {
   edit(type: string, updated: any) {
     return this.http.patch(`${this.baseUrl}/${type}/edit`, updated);
   }
-  // Get all files
-  getAllObjects(data: any): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${data}`);
+  // Get all files with pagination
+  getAllObjects(type: string, size = 5, page = 0): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${type}`, {params: {size, page}});
   }
-   //postcontrat
+
+  searchTiers(type:any) :Observable<any>{
+    return this.http.get(`${this.baseUrl}/${type}/Search`)
+  }
+
+   //Authentification
    authService(type:any,user:user) : Observable<any>{
-    return this.http.post(`${this.authUrl}/${type}`,user);
+    return this.http
+    .post(`${this.authUrl}/${type}`,user);
   }
-   //postcontrat
+   //Registration
    RegisterService(type:any,user:user) : Observable<any>{
     return this.http.post(`${this.authUrl}/${type}`,user);
   }
 
-  save(type: string, toAdd: any) {
-    return this.http.post(`${this.baseUrl}/${type}`, toAdd);
-  } 
-  
+  private handleError(httpError: HttpErrorResponse) {
+    let message: string = "";
+
+    if (httpError.error instanceof ProgressEvent) {
+        console.log("in progrss event");
+        message = "Network error";
+    }
+    else {
+        message = httpError.error.message;
+        console.error(
+            `Backend returned code ${httpError.status}, ` +
+                `body was: ${httpError.error}`
+        );
+    }
+  }
+
+  isLoggedIn(): boolean {
+    return sessionStorage.getItem("username") !== null;
+}
+
+
+logout() {
+  sessionStorage.clear();
+  this.router.navigate(["/"]);
+}
+    
 }
