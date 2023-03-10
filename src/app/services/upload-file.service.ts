@@ -1,6 +1,8 @@
+
 import { HttpClient, HttpEvent, HttpRequest ,HttpErrorResponse} from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of, throwError } from 'rxjs';
 import { user } from '../demo/domain/user.model';
 import { catchError, map } from "rxjs/operators";
 import { Router } from '@angular/router';
@@ -47,6 +49,7 @@ export class UploadFileService {
   getAllObjects(type: string, size = 5, page = 0): Observable<any> {
     return this.http.get(`${this.baseUrl}/${type}`, {params: {size, page}});
   }
+
 
   searchTiers(type:any) :Observable<any>{
     return this.http.get(`${this.baseUrl}/${type}/Search`)

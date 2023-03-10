@@ -1,22 +1,39 @@
 <div class="login-body">
-    <div class="login-panel"></div>
+    <form [formGroup]="LogInForm" (ngSubmit)="saveUser()">
+        <div class="login-panel"></div>
 
-    <div class="login-content">
-        <img src="assets/layout/images/logo-black.png" alt="babylon-layout"/>
+        <div class="login-content">
 
         <h1><span>SIGN IN</span> TO CDZ</h1>
         <p>Welcome, please use the form to sign-in.</p>
 
-        <div class="login-input-wrapper">
-            <input type="text" autocomplete="off" placeholder="Username"  [(ngModel)]="email" pInputText>
-            <i class="pi pi-user"></i>
-        </div>
+            <img src="assets/layout/images/logo-black.png" alt="babylon-layout" />
 
-        <div class="login-input-wrapper">
-            <input type="password" autocomplete="off" placeholder="Password" [(ngModel)]="password" pInputText>
-            <i class="pi pi-lock"></i>
-        </div>
+
 
         <button [routerLink]="['/uikit']"  pButton type="button" label="Sign In" (click)="saveUser()"></button>
     </div>
+</div>
+
+            <div class="login-input-wrapper">
+                <input type="email" autocomplete="off" placeholder="email" formControlName="email" [(ngModel)]="userInfo.email" pInputText>
+                <i class="pi pi-user"></i>
+                <span *ngIf="!LogInForm.get('email')?.errors?.['required'] && LogInForm.get('email')?.touched && LogInForm.get('email')?.invalid " class="help-block" > Please enter a valid email</span>
+                <span *ngIf="LogInForm.get('email')?.errors?.['required'] && LogInForm.get('email')?.touched  " class="help-block" > email required</span>
+               
+            </div>
+
+            <div class="login-input-wrapper">
+                <input type="password" autocomplete="off" placeholder="Password" formControlName="password" [(ngModel)]="userInfo.password"
+                    pInputText>
+                <i class="pi pi-lock"></i>
+                <span *ngIf="LogInForm.get('password')?.errors?.['required'] && LogInForm.get('password')?.touched  " class="help-block" > password required</span>
+                        <span *ngIf=" LogInForm.get('password')?.value!='' && LogInForm.get('password')?.errors?.['minlength'].requiredLength > LogInForm.get('password')?.errors?.['minlength'].actualLength " class="help-block" > password less then 8</span>
+
+            </div>
+
+            <button pButton type="submit" label="Sign In" [disabled]="LogInForm.invalid"></button>
+
+        </div>
+    </form>
 </div>

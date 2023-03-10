@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { user } from '../demo/domain/user.model';
 import { UploadFileService } from '../services/upload-file.service';
@@ -9,19 +11,28 @@ import { UploadFileService } from '../services/upload-file.service';
 })
 export class AppLoginComponent {
 
+
+
+  LogInForm : FormGroup= new FormGroup({
+    
+   
+    email:new FormControl ('', [Validators.required,Validators.email]),
+    password: new FormControl ('',[Validators.required , Validators.minLength(8)])
+  })
+
 userInfo : user={password:"",email:""};
 
-  email: string;
-  password: string ;
+
 
 submitted :boolean;
   constructor(
-    private uploadFileService: UploadFileService
+    private uploadFileService: UploadFileService,
+    private router: Router
   ) { }
 
   signin(){
-    console.log(this.password);
-    console.log(this.email);
+    console.log(this.userInfo.password);
+    console.log(this.userInfo.email);
 
 
 
@@ -30,10 +41,10 @@ submitted :boolean;
   
   saveUser() {
     
-    console.log(this.email);
-    console.log(this.password);
-  this.userInfo.password=this.password;
-  this.userInfo.email= this.email;
+    console.log(this.userInfo.email);
+    console.log(this.userInfo.password);
+  this.userInfo.password=this.userInfo.password;
+  this.userInfo.email= this.userInfo.email;
   
    
    
@@ -43,6 +54,12 @@ submitted :boolean;
     this.uploadFileService.authService
           ("authenticate", this.userInfo).subscribe((response: any) => {
             console.log(response);
+            if (response.error)
+            { this.router.navigate(['access']);
+              return  }
+
+            this.router.navigate(['']);
+       //     error => console.error(error)
          });
         
       }
