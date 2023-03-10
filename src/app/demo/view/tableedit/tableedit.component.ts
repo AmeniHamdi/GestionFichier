@@ -34,8 +34,8 @@ export class TableeditComponent implements OnChanges {
     @Output() onEdit = new EventEmitter();
 
     @Output() onLazyLoad = new EventEmitter<LazyLoadEvent>();
-    @Output() sortFunction= new EventEmitter<SortEvent>();
-    
+    @Output() sortFunction = new EventEmitter<SortEvent>();
+
     @Output() onSave = new EventEmitter();
     productDialog: boolean;
     product: any;
@@ -75,7 +75,7 @@ export class TableeditComponent implements OnChanges {
         this.onLazyLoad.emit(event);
     }
 
-    customSort(event: SortEvent){
+    customSort(event: SortEvent) {
         this.sortFunction.emit(event);
     }
 
