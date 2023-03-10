@@ -57,11 +57,24 @@ export class UploadFileService {
    //Authentification
    authService(type:any,user:user) : Observable<any>{
     return this.http
-    .post(`${this.authUrl}/${type}`,user);
+    .post(`${this.authUrl}/${type}`,user).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+          // client-side error
+          errorMessage = `Error: ${error.status}`;
+        } else {
+          // server-side error
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        }
+    //    console.error("hhhhhhhhh",errorMessage);
+        return of({error: true});
+      })
+    );
   }
    //Registration
    RegisterService(type:any,user:user) : Observable<any>{
-    return this.http.post(`${this.authUrl}/${type}`,user);
+    return this.http.post(`${this.authUrl}/${type}`,user)
   }
 
   private handleError(httpError: HttpErrorResponse) {

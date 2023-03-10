@@ -1,5 +1,5 @@
 <div class="login-body">
-    <form [formGroup]="LogInForm" (ngSubmit)="saveUser()">
+    <form [formGroup]="LogInForm" (ngSubmit)="saveUser()" >
         <div class="login-panel"></div>
 
         <div class="login-content">
@@ -26,7 +26,7 @@
 
             </div>
 
-            <button  [routerLink]="['/uikit']" pButton type="submit" label="Sign In" [disabled]="LogInForm.invalid"></button>
+            <button  pButton type="submit" label="Sign In" [disabled]="LogInForm.invalid" (click)="saveUser()" ></button>
 
         </div>
     </form>
