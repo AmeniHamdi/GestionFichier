@@ -41,6 +41,12 @@
 
             </div>
 
+            <div class="login-input-wrapper">
+                <input type="password" autocomplete="off" placeholder=" Confirm Password" formControlName="confirmPassword" 
+pInputText>
+                <i class="pi pi-lock"></i>
+                <span *ngIf=" SignUpForm.get('confirmPassword')?.value !==SignUpForm.get('password')?.value " class="help-block" >Passwords does not matches</span>
+            </div>
             <button  pButton type="button" label="Sign Up" (click)="saveUser()"></button>
 
         </div>
