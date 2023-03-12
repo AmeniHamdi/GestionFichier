@@ -18,7 +18,7 @@
 
             <a href="#" (click)="appMain.onTopbarItemClick($event,profile)">
                 <img alt="babylon-layout" src="assets/layout/images/avatar.png"/>
-                <span class="topbar-item-name">Arlene Welch</span>
+                <span class="topbar-item-name">Ameni Hamdi</span>
             </a>
 
             <ul class="fadeInDown">
@@ -47,6 +47,12 @@
                     </a>
                 </li>
             </ul>
+        </li>
+        <li>
+            <a href="#" (click)="onLogout()">
+                <i class="topbar-icon pi pi-power-off"></i>
+                <span class="topbar-item-name">Logout</span>
+            </a>
         </li>
         <li #notifications [ngClass]="{'active-topmenuitem':appMain.activeTopbarItem === notifications}">
             <a href="#" (click)="appMain.onTopbarItemClick($event,notifications)">

@@ -41,6 +41,8 @@ export class TableDemoComponent implements OnInit {
     fileType = "";
     private size: number;
     private page: number;
+    private sortField: string;
+    private asc: boolean;
 
     loading = true;
 
@@ -66,7 +68,9 @@ export class TableDemoComponent implements OnInit {
             this.uploadService.getAllObjects(
                 this.fileType,
                 this.size,
-                this.page
+                this.page,
+                this.sortField,
+                this.asc
             )
         );
         this.fileContent = rows;
@@ -74,31 +78,11 @@ export class TableDemoComponent implements OnInit {
     }
 
     onLazyLoad(event: LazyLoadEvent) {
-        //console.log(event);
+        console.log(event);
+        this.sortField = event.sortField;
+        this.asc = event.sortOrder === 1;
         this.size = event.rows;
         this.page = Math.ceil(event.first / event.rows);
-        this.reloadContent();
-    }
-
-    sortFunction(event: SortEvent) {
-        console.log(event);
-        event.data.sort((data1, data2) => {
-            let value1 = data1[event.field];
-            let value2 = data2[event.field];
-            let result = null;
-            console.log("result", result);
-            console.log("value1", value1);
-            console.log("value2", value2);
-
-            if (value1 == null && value2 != null) result = -1;
-            else if (value1 != null && value2 == null) result = 1;
-            else if (value1 == null && value2 == null) result = 0;
-            else if (typeof value1 === "string" && typeof value2 === "string")
-                result = value1.localeCompare(value2);
-            else result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
-
-            return event.order * result;
-        });
         this.reloadContent();
     }
 
@@ -114,10 +98,11 @@ export class TableDemoComponent implements OnInit {
             }
             this.fileType = params["fileType"];
 
+            this.sortField = "id";
+            this.asc = true;
+
             // load content for the first time
             return this.reloadContent();
         });
     }
-     data1 = this.fileContent;
-     data2 = this.fileContent;
 }

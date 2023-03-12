@@ -45,10 +45,9 @@ export class UploadFileService {
     return this.http.patch(`${this.baseUrl}/${type}/edit`, updated);
   }
   // Get all files with pagination
-  getAllObjects(type: string, size = 5, page = 0): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${type}`, {params: {size, page}});
+  getAllObjects(type: string, size = 5, page = 0, sortBy = "id", asc = true): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${type}`, {params: {size, page, sortBy, asc}});
   }
-
 
   searchTiers(type:any) :Observable<any>{
     return this.http.get(`${this.baseUrl}/${type}/Search`)
@@ -94,7 +93,7 @@ export class UploadFileService {
   }
 
   isLoggedIn(): boolean {
-    return sessionStorage.getItem("username") !== null;
+    return sessionStorage.getItem("token") !== null;
 }
 
 

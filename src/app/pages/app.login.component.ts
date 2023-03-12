@@ -55,7 +55,9 @@ submitted :boolean;
           ("authenticate", this.userInfo).subscribe((response: any) => {
            
             if (!response.error)
-            { this.router.navigate(['/uikit']);
+            { 
+              sessionStorage.setItem("token", response.token);
+              this.router.navigate(['/uikit']);
               return  }
               
 

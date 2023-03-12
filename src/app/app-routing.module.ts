@@ -32,6 +32,7 @@ import {AppHelpComponent} from './pages/app.help.component';
 import {AppWizardComponent} from './pages/app.wizard.component';
 import {BlocksComponent} from './blocks/blocks/blocks.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { UserAccessGuard } from 'src/security/user-access.guard';
 
 @NgModule({
     imports: [
@@ -66,7 +67,8 @@ import { RegisterComponent } from './pages/register/register.component';
                     {path: 'pages/empty', component: EmptyDemoComponent},
                     {path: 'documentation', component: DocumentationComponent},
                     {path: 'blocks', component: BlocksComponent},
-                ]
+                ],
+                canActivate: [UserAccessGuard]
             },
             {path: '', component: AppLoginComponent},
             {path: 'error', component: AppErrorComponent},

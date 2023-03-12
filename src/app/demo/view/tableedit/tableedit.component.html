@@ -24,7 +24,7 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="header" [style]="'width: ' + (100/ headers.length + 1) + '%'"
+                    <th [pSortableColumn]="header" [style]="'width: ' + (100/ headers.length + 1) + '%'"
                         *ngFor="let header of headers">
                         {{ header }}
                         <p-sortIcon field="header"></p-sortIcon>
