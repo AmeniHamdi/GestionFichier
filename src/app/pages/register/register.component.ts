@@ -20,8 +20,11 @@ export class RegisterComponent {
             Validators.required,
             Validators.minLength(8),
         ]),
+        confirmPassword: new FormControl ('', Validators.required),
     });
+
     userInfo: user = { firstName: "", lastName: "", password: "", email: "" };
+    
 
     // email: string;
     // password: string ;
