@@ -70,11 +70,11 @@ import { UserAccessGuard } from 'src/security/user-access.guard';
                 ],
                 canActivate: [UserAccessGuard]
             },
-            {path: '', component: AppLoginComponent},
+            {path: '', component: RegisterComponent},
             {path: 'error', component: AppErrorComponent},
             {path: 'access', component: AppAccessdeniedComponent},
             {path: 'notfound', component: AppNotfoundComponent},
-            {path: 'register', component: RegisterComponent },
+            {path: 'login', component:  AppLoginComponent},
             {path: 'wizard', component: AppWizardComponent},
             {path: '**', redirectTo: '/notfound'},
         ], {scrollPositionRestoration: 'enabled'})
