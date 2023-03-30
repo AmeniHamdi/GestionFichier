@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
 })
 export class UploadFileService {
 
-  private baseUrl = 'http://localhost:8086/api/csv';
-  private authUrl ='http://localhost:8086/auth';
+  private baseUrl = 'http://192.168.56.3:8086/api/csv';
+  private authUrl ='http://192.168.56.3:8086/auth';
   
   constructor(private http: HttpClient,private router: Router) { }
 
