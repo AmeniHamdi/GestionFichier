@@ -1,11 +1,12 @@
+<p-toast></p-toast>
 <div class="login-body">
     <form [formGroup]="SignUpForm" >
         <div class="login-panel"></div>
 
         <div class="login-content">
-            <img src="assets/layout/images/logo-black.png" alt="babylon-layout" />
+            <img src="assets/layout/images/cdz.PNG" alt="babylon-layout" />
 
-            <h1><span>SIGN Up</span> TO BABYLON</h1>
+            <h1><span>SIGN Up</span> TO CDZ</h1>
             <p>Welcome, please use the form to sign-Up.</p>
 
             <div class="login-input-wrapper">
@@ -40,13 +41,13 @@
                 <span *ngIf=" SignUpForm.get('password')?.value!='' && SignUpForm.get('password')?.errors?.['minlength'].requiredLength > SignUpForm.get('password')?.errors?.['minlength'].actualLength " class="help-block" > password less then 8</span>
 
             </div>
-
             <div class="login-input-wrapper">
                 <input type="password" autocomplete="off" placeholder=" Confirm Password" formControlName="confirmPassword" 
 pInputText>
                 <i class="pi pi-lock"></i>
                 <span *ngIf=" SignUpForm.get('confirmPassword')?.value !==SignUpForm.get('password')?.value " class="help-block" >Passwords does not matches</span>
             </div>
+
             <button  pButton type="button" label="Sign Up" (click)="saveUser()"></button>
 
         </div>

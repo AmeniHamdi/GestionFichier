@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
@@ -150,6 +150,7 @@ import {BreadcrumbService} from './app.breadcrumb.service';
 import {MenuService} from './app.menu.service';
 import { TableeditComponent } from './demo/view/tableedit/tableedit.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { HeaderInterceptor } from 'src/config/interceptor';
 
 @NgModule({
     imports: [
@@ -291,7 +292,9 @@ import { RegisterComponent } from './pages/register/register.component';
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, MenuService, BreadcrumbService
+        PhotoService, ProductService, MenuService, BreadcrumbService,
+        { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true }
+        
     ],
     bootstrap: [AppComponent]
 })

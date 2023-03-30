@@ -1,71 +1,85 @@
-<!-- <div class="grid">
-    <div class="col-12">
-        <div class="card">
-            <h5>Advanced</h5>
-
-            <p-fileUpload name="demo[]" url="uikit/file" (onUpload)="onUpload()"
-                          multiple="multiple">
-                <ng-template pTemplate="content">
-                    <ul *ngIf="uploadedFiles.length">
-                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                    </ul>
-                </ng-template>                
-            </p-fileUpload>
-        </div>
-    </div>
-</div> -->
 <div class="grid">
     <div class="col-12">
         <div class="card">
             <div class="container" style="width:600px">
-                <div style="margin:20px">
-                    <h4>Upload your Document</h4>
+                <div class="container" style="margin:20px">
+                    <p>Upload your file </p>
+                    <style>
+                        div.container {
+                            background-color: #ffffff;
+                        }
+
+                        div.container p {
+                            font-family: Georgia;
+                            font-size: 14px;
+                            font-style: normal;
+                            font-weight: normal;
+                            text-decoration: none;
+                            text-transform: uppercase;
+                            color: indigo;
+                            background-color: #ffffff;
+                        }
+                    </style>
                 </div>
                 <div class="card">
-                <form [formGroup]="form">
-                    <div class="form-check">
-    
-                            <h6>Choose you File Type</h6>
-                        
-                        <br />
-                        <input class="form-check-input" type="radio" name="document" value="contrat"
-                            formControlName="document">
-                        <label class="form-check-label">Contrat</label>
-                        <br />
-                        <input class="form-check-input" type="radio" name="document" value="tier"
-                            formControlName="document">
-                        <label class="form-check-label">Tier</label>
-                        <br />
-                        <input class="form-check-input" type="radio" name="document" value="dossier"
-                            formControlName="document">
-                        <label class="form-check-label">Dossier</label>
+                    <div class="grid">
+                        <form [formGroup]="form">
+                            <div class="form-check">
+                                <h6>Choose you File Type</h6>
+                                <br />
+                                <div class="col-12 md:col-4">
+                                    <div class="field-radiobutton">
+
+                                        <p-radioButton name="document" value="contrat"
+                                            formControlName="document"></p-radioButton>
+                                        <label for="city1">Contrat</label>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="col-12 md:col-4">
+                                    <div class="field-radiobutton">
+                                        <p-radioButton name="document" value="tier"
+                                            formControlName="document"></p-radioButton>
+                                        <label for="city1">Tier</label>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="col-12 md:col-4">
+                                    <div class="field-radiobutton">
+                                        <p-radioButton name="document" value="dossier"
+                                            formControlName="document"></p-radioButton>
+                                        <label for="city1">Dossier</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
 
                     </div>
-                </form>
-            </div>
-                <div *ngIf="currentFile" class="progress">
-                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
-                        attr.aria-valuemin="{{progress}}" aria-valuemin="0" aria-valuemax="100"
-                        [ngStyle]="{ width: progress +'%'}">
-                        {{progress}}%
+                    <div *ngIf="currentFile" class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                            attr.aria-valuemin="{{progress}}" aria-valuemin="0" aria-valuemax="100"
+                            [ngStyle]="{ width: progress +'%'}">
+                            {{progress}}%
+                        </div>
                     </div>
-                </div>
-                <p-fileUpload (uploadHandler)="onUpload($event)" type="file" customUpload="true" #primeFileUpload multiple="false">
-                    <ng-template pTemplate="content">
-                        <ul *ngIf="uploadedFiles.length">
-                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                        </ul>
-                    </ng-template>
-                </p-fileUpload>
-                <!-- <ng-template pTemplate="right">
+                    <p-fileUpload (uploadHandler)="onUpload($event)" type="file" customUpload="true" #primeFileUpload
+                        multiple="false">
+                        <ng-template pTemplate="content">
+                            <ul *ngIf="uploadedFiles.length">
+                                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                            </ul>
+                        </ng-template>
+                    </p-fileUpload>
+                    <!-- <ng-template pTemplate="right">
                     <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
                     <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
                 </ng-template> -->
-            
 
-                <div class="alert alert-light" role="alert">{{ message }}</div>
-                <div *ngIf="redirecting" class="alert alert-light" role="alert">Redirection in seconds...</div>
+
+                    <div class="alert alert-light" role="alert">{{ message }}</div>
+                    <div *ngIf="redirecting" class="alert alert-light" role="alert">Redirection in seconds...</div>
+                </div>
             </div>
         </div>
     </div>
-</div>

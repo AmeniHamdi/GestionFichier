@@ -15,12 +15,12 @@ export class AppMenuComponent implements OnInit {
 
     ngOnInit() {
         this.model = [
-            {
-                label: 'Home Page', icon: 'pi pi-fw pi-home',
-                items: [
-                    {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/']}
-                ]
-            },
+            // {
+            //     label: 'Home Page', icon: 'pi pi-fw pi-home',
+            //     items: [
+            //         {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/uikit']}
+            //     ]
+            // },
             {
                 label: 'File Section', icon: 'pi pi-fw pi-star-fill', routerLink: ['/uikit'],
                 items: [
@@ -59,13 +59,13 @@ export class AppMenuComponent implements OnInit {
             //     ]
             // },
             {
-                label: 'Pages', icon: 'pi pi-fw pi-copy', routerLink: ['/pages'],
+                label: 'Connexion', icon: 'pi pi-fw pi-copy', routerLink: ['/pages'],
                 items: [
                     // {label: 'Crud', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/crud']},
                     // {label: 'Calendar', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/pages/calendar']},
                     // {label: 'Timeline', icon: 'pi pi-fw pi-calendar', routerLink: ['/pages/timeline']},
                     // {label: 'Landing', icon: 'pi pi-fw pi-globe', url: 'assets/pages/landing.html', target: '_blank'},
-                    {label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/login']},
+                    {label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/']},
                     {label: 'Sign Up', icon: 'pi pi-fw pi-sign-in', routerLink: ['/register']},
                     // {label: 'Invoice', icon: 'pi pi-fw pi-dollar', routerLink: ['/pages/invoice']},
                     // {label: 'Help', icon: 'pi pi-fw pi-question-circle', routerLink: ['/pages/help']},
@@ -118,17 +118,17 @@ export class AppMenuComponent implements OnInit {
             //         }
             //     ]
             // },
-            {
-                label: 'Get Started', icon: 'pi pi-fw pi-download',
-                items: [
-                    {
-                        label: 'Documentation', icon: 'pi pi-fw pi-file', routerLink: ['/documentation']
-                    },
-                    {
-                        label: 'Buy Now', icon: 'pi pi-fw pi-money-bill', url: ['https://www.primefaces.org/store']
-                    }
-                ]
-            }
+            // {
+            //     label: 'Get Started', icon: 'pi pi-fw pi-download',
+            //     items: [
+            //         {
+            //             label: 'Documentation', icon: 'pi pi-fw pi-file', routerLink: ['/documentation']
+            //         },
+            //         {
+            //             label: 'Buy Now', icon: 'pi pi-fw pi-money-bill', url: ['https://www.primefaces.org/store']
+            //         }
+            //     ]
+            // }
         ];
     }
 }

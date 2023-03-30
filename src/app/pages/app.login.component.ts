@@ -53,14 +53,17 @@ submitted :boolean;
 
     this.uploadFileService.authService
           ("authenticate", this.userInfo).subscribe((response: any) => {
-            console.log(response);
-            if (response.error)
-            { this.router.navigate(['access']);
+           
+            if (!response.error)
+            { 
+              sessionStorage.setItem("token", response.token);
+              this.router.navigate(['/uikit/file']);
               return  }
+              
 
-            this.router.navigate(['']);
+            this.router.navigate(['/uikit/notfound']);
        //     error => console.error(error)
-         });
+       });
         
       }
       

@@ -1,12 +1,12 @@
 <div class="login-body">
-    <form [formGroup]="LogInForm" (ngSubmit)="saveUser()">
+    <form [formGroup]="LogInForm" (ngSubmit)="saveUser()" >
         <div class="login-panel"></div>
 
         <div class="login-content">
 
-            <img src="assets/layout/images/logo-black.png" alt="babylon-layout" />
+            <img src="assets/layout/images/cdz.PNG" alt="babylon-layout" />
 
-            <h1><span>SIGN IN</span> TO BABYLON</h1>
+            <h1><span>SIGN IN</span> TO CDZ</h1>
             <p>Welcome, please use the form to sign-in.</p>
 
             <div class="login-input-wrapper">
@@ -26,7 +26,7 @@
 
             </div>
 
-            <button pButton type="submit" label="Sign In" [disabled]="LogInForm.invalid"></button>
+            <button  pButton type="submit" label="Sign In" [disabled]="LogInForm.invalid" (click)="saveUser()" ></button>
 
         </div>
     </form>

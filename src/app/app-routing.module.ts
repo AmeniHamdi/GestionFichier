@@ -32,31 +32,32 @@ import {AppHelpComponent} from './pages/app.help.component';
 import {AppWizardComponent} from './pages/app.wizard.component';
 import {BlocksComponent} from './blocks/blocks/blocks.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { UserAccessGuard } from 'src/security/user-access.guard';
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
             {
-                path: '', component: AppMainComponent,
+                path: 'uikit', component: AppMainComponent,
                 children: [
                     {path: '', component: DashboardDemoComponent},
-                    {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
-                    {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
-                    {path: 'uikit/invalidstate', component: InvalidStateDemoComponent},
-                    {path: 'uikit/input', component: InputDemoComponent},
-                    {path: 'uikit/button', component: ButtonDemoComponent},
-                    //{path: 'uikit/table', component: TableDemoComponent},
-                    {path: 'uikit/table/:fileType', component: TableDemoComponent},
-                    {path: 'uikit/list', component: ListDemoComponent},
-                    {path: 'uikit/tree', component: TreeDemoComponent},
-                    {path: 'uikit/panel', component: PanelsDemoComponent},
-                    {path: 'uikit/overlay', component: OverlaysDemoComponent},
-                    {path: 'uikit/menu', loadChildren: () => import('./demo/view/menus/menus.module').then(m => m.MenusModule)},
-                    {path: 'uikit/media', component: MediaDemoComponent},
-                    {path: 'uikit/message', component: MessagesDemoComponent},
-                    {path: 'uikit/misc', component: MiscDemoComponent},
-                    {path: 'uikit/charts', component: ChartsDemoComponent},
-                    {path: 'uikit/file', component: FileDemoComponent},
+                    {path: 'formlayout', component: FormLayoutDemoComponent},
+                    {path: 'floatlabel', component: FloatLabelDemoComponent},
+                    {path: 'invalidstate', component: InvalidStateDemoComponent},
+                    {path: 'input', component: InputDemoComponent},
+                    {path: 'button', component: ButtonDemoComponent},
+                    //{path: 'table', component: TableDemoComponent},
+                    {path: 'table/:fileType', component: TableDemoComponent},
+                    {path: 'list', component: ListDemoComponent},
+                    {path: 'tree', component: TreeDemoComponent},
+                    {path: 'panel', component: PanelsDemoComponent},
+                    {path: 'overlay', component: OverlaysDemoComponent},
+                    {path: 'menu', loadChildren: () => import('./demo/view/menus/menus.module').then(m => m.MenusModule)},
+                    {path: 'media', component: MediaDemoComponent},
+                    {path: 'message', component: MessagesDemoComponent},
+                    {path: 'misc', component: MiscDemoComponent},
+                    {path: 'charts', component: ChartsDemoComponent},
+                    {path: 'file', component: FileDemoComponent},
                     {path: 'utilities/icons', component: IconsComponent},
                     {path: 'pages/crud', component: AppCrudComponent},
                     {path: 'pages/calendar', component: AppCalendarComponent},
@@ -66,12 +67,13 @@ import { RegisterComponent } from './pages/register/register.component';
                     {path: 'pages/empty', component: EmptyDemoComponent},
                     {path: 'documentation', component: DocumentationComponent},
                     {path: 'blocks', component: BlocksComponent},
-                ]
+                ],
+                canActivate: [UserAccessGuard]
             },
+            {path: '', component: AppLoginComponent},
             {path: 'error', component: AppErrorComponent},
             {path: 'access', component: AppAccessdeniedComponent},
             {path: 'notfound', component: AppNotfoundComponent},
-            {path: 'login', component: AppLoginComponent},
             {path: 'register', component: RegisterComponent },
             {path: 'wizard', component: AppWizardComponent},
             {path: '**', redirectTo: '/notfound'},
