@@ -45,8 +45,8 @@ export class UploadFileService {
     return this.http.patch(`${this.baseUrl}/${type}/edit`, updated);
   }
   // Get all files with pagination
-  getAllObjects(type: string, size = 5, page = 0, sortBy = "id", asc = true): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${type}`, {params: {size, page, sortBy, asc}});
+  getAllObjects(type: string, size = 5, page = 0, sortBy = "id", asc = true, searchTerm?: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${type}`, {params: {size, page, sortBy, asc, searchTerm}});
   }
 
   searchTiers(type:any) :Observable<any>{

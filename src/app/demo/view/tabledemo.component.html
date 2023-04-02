@@ -1,6 +1,6 @@
 <app-tableedit *ngIf="fileContent" [products]="fileContent" [fileType]="fileType" (onDelete)="reloadContent()" 
-(onEdit)="reloadContent()" (onSave)="reloadContent()" (onLazyLoad)="onLazyLoad($event)" [totalRecords]="totalRecords" 
-(sortFunction)="sortFunction($event)" />
+(onEdit)="reloadContent()" (onSave)="reloadContent()" (onLazyLoad)="onLazyLoad($event)" (onInputUpdated)="onSearchTerm($event)"
+[totalRecords]="totalRecords" (sortFunction)="sortFunction($event)" />
 
 
 

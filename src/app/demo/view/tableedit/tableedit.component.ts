@@ -3,14 +3,18 @@ import {
     EventEmitter,
     Input,
     OnChanges,
+    OnInit,
     Output,
     SimpleChanges,
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
 import { MessageService, LazyLoadEvent, SortEvent } from "primeng/api";
-import { firstValueFrom, take } from "rxjs";
+import { BehaviorSubject, firstValueFrom, take, throttleTime } from "rxjs";
 import { UploadFileService } from "src/app/services/upload-file.service";
+
+// throttle time between input and emitting search
+const INPUT_THROTTLE_MS = 1000;
 
 @Component({
     selector: "app-tableedit",
@@ -24,7 +28,7 @@ import { UploadFileService } from "src/app/services/upload-file.service";
         `,
     ],
 })
-export class TableeditComponent implements OnChanges {
+export class TableeditComponent implements OnChanges, OnInit {
     @Input() fileType: string = "";
     @Input() products: any;
 
@@ -35,8 +39,9 @@ export class TableeditComponent implements OnChanges {
 
     @Output() onLazyLoad = new EventEmitter<LazyLoadEvent>();
     @Output() sortFunction = new EventEmitter<SortEvent>();
-
     @Output() onSave = new EventEmitter();
+    @Output() onInputUpdated = new EventEmitter<string>();
+
     productDialog: boolean;
     product: any;
     submitted: boolean;
@@ -45,6 +50,7 @@ export class TableeditComponent implements OnChanges {
     clonedProducts: { [s: string]: any } = {};
     addForm: FormGroup;
     globalFilter: true;
+    throttledInput = new BehaviorSubject("");
 
     constructor(
         private http: HttpClient,
@@ -52,9 +58,21 @@ export class TableeditComponent implements OnChanges {
         private messageService: MessageService
     ) {}
 
-    //oninit is no longer available here
+    handleInput(searchTerm: string) {
+        this.throttledInput.next(searchTerm);
+    }
+
+    throttledInputSubscription() {
+        this.throttledInput.pipe(throttleTime(INPUT_THROTTLE_MS, null, {leading: false, trailing: true}))
+        .subscribe(input => this.onInputUpdated.emit(input));
+    }
+
+    ngOnInit(): void {
+        this.throttledInputSubscription()
+    }
+
     ngOnChanges(changes: SimpleChanges) {
-        if (!changes["products"]) return;
+        if (!changes || !changes["products"] || !this.products?.length) return;
         this.headers = Object.keys(this.products[0]);
         this.productDialog = false;
         this.addForm = new FormGroup(

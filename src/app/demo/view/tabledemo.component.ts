@@ -1,9 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { Customer, Representative } from "../domain/customer";
+import { Component, OnInit } from "@angular/core";
 import { CustomerService } from "../service/customerservice";
-import { Product } from "../domain/product";
 import { ProductService } from "../service/productservice";
-import { Table } from "primeng/table";
 import { BreadcrumbService } from "../../app.breadcrumb.service";
 import {
     MessageService,
@@ -43,6 +40,7 @@ export class TableDemoComponent implements OnInit {
     private page: number;
     private sortField: string;
     private asc: boolean;
+    private searchTerm: string;
 
     loading = true;
 
@@ -70,7 +68,8 @@ export class TableDemoComponent implements OnInit {
                 this.size,
                 this.page,
                 this.sortField,
-                this.asc
+                this.asc,
+                this.searchTerm
             )
         );
         this.fileContent = rows;
@@ -83,6 +82,11 @@ export class TableDemoComponent implements OnInit {
         this.asc = event.sortOrder === 1;
         this.size = event.rows;
         this.page = Math.ceil(event.first / event.rows);
+        this.reloadContent();
+    }
+
+    onSearchTerm(event: string) {
+        this.searchTerm = event;
         this.reloadContent();
     }
 

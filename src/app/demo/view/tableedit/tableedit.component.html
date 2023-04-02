@@ -15,7 +15,7 @@
                 <div class="flex">
                     <span class="p-input-icon-left ml-auto">
                         <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                        <input pInputText type="text" (input)="handleInput($event.target.value)"
                             placeholder="Search keyword" />
                     </span>
                 </div>
@@ -27,7 +27,6 @@
                         *ngFor="let header of headers">
                         {{ header }}
                         <p-sortIcon field="header"></p-sortIcon>
-                        <p-columnFilter type="text" field="header" display="menu"></p-columnFilter>
                     </th>
                     <th [style]="'width: ' + (100/ headers.length + 1) + '%'"></th>
                 </tr>
