@@ -121,6 +121,7 @@ import {MiscDemoComponent} from './demo/view/miscdemo.component';
 import {EmptyDemoComponent} from './demo/view/emptydemo.component';
 import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
 import {FileDemoComponent} from './demo/view/filedemo.component';
+import {CSVComponent} from './demo/view/csv.component';
 import {DocumentationComponent} from './demo/view/documentation.component';
 import {IconsComponent} from './utilities/icons.component';
 import {AppCrudComponent} from './pages/app.crud.component';
@@ -150,7 +151,11 @@ import {BreadcrumbService} from './app.breadcrumb.service';
 import {MenuService} from './app.menu.service';
 import { TableeditComponent } from './demo/view/tableedit/tableedit.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { AdminPanelComponent } from './demo/view/adminpanel.component';
+import { UsertableComponent } from './demo/view/usertable/usertable.component';
 import { HeaderInterceptor } from 'src/config/interceptor';
+import { RxStompService } from './services/rx-stomp.service';
+import { rxStompServiceFactory } from './services/rx-stomp-service-factory';
 
 @NgModule({
     imports: [
@@ -272,6 +277,7 @@ import { HeaderInterceptor } from 'src/config/interceptor';
         ChartsDemoComponent,
         EmptyDemoComponent,
         FileDemoComponent,
+        CSVComponent,
         DocumentationComponent,
         IconsComponent,
         AppCrudComponent,
@@ -288,12 +294,18 @@ import { HeaderInterceptor } from 'src/config/interceptor';
         BlocksComponent,
         TableeditComponent,
         RegisterComponent,
+        AdminPanelComponent,
+        UsertableComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService, MenuService, BreadcrumbService,
-        { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },
+        {
+            provide: RxStompService,
+            useFactory: rxStompServiceFactory,
+          },
         
     ],
     bootstrap: [AppComponent]

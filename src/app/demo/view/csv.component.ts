@@ -1,22 +1,18 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { MessageService } from "primeng/api";
 import { BreadcrumbService } from "../../app.breadcrumb.service";
 import { UploadFileService } from "../../services/upload-file.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { HttpEventType, HttpResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { RxStompService } from "src/app/services/rx-stomp.service";
-import { tap } from "rxjs";
 
 const REDIRECTION_TIMEOUT = 3000;
 @Component({
-    templateUrl: "./filedemo.component.html",
+    templateUrl: "./csv.component.html",
     providers: [MessageService],
 })
-export class FileDemoComponent implements OnInit {
-    public redirecting = false
-    public isWaiting = false;
-    
+export class CSVComponent {
+    public redirecting = false;
     form = new FormGroup({
         document: new FormControl("", Validators.required),
     });
@@ -27,32 +23,16 @@ export class FileDemoComponent implements OnInit {
     message = "";
     uploadedFiles: any[] = [];
 
-    extractedData = null;
-    products = [];
-    headers = [];
-
     constructor(
         private messageService: MessageService,
         private breadcrumbService: BreadcrumbService,
         private uploadService: UploadFileService,
-        private socket: RxStompService,
-        private router: Router,
-        
+        private router: Router
     ) {
         this.breadcrumbService.setItems([
             { label: "UI Kit" },
-            { label: "File" },
+            { label: "CSV" },
         ]);
-    }
-
-    ngOnInit() {
-        this.socket.watch("/kafka/response").pipe(tap(data => {
-            this.isWaiting = false;
-            this.extractedData = JSON.parse(data.body);
-            this.headers = Object.keys(this.extractedData.content);
-            this.products = [this.extractedData.content] 
-
-        })).subscribe();
     }
     // select a csv file
     selectFile(event: any) {
@@ -60,13 +40,13 @@ export class FileDemoComponent implements OnInit {
     }
 
     onUpload(event: any) {
+        console.log("INSIDE onUpload")
         const fileType = this.form.get("document")?.value;
         this.progress = 0;
         this.currentFile = event.files?.[0];
+        console.log("INSIDE onUpload", event)
         if (this.currentFile) {
-            this.isWaiting = false;
-            this.extractedData = "";
-            this.uploadService.upload(this.currentFile).subscribe(
+            this.uploadService.uploadCSV(this.currentFile, fileType).subscribe(
                 async (event) => {
                     if (event.type === HttpEventType.UploadProgress) {
                         this.progress = Math.round(
@@ -74,18 +54,17 @@ export class FileDemoComponent implements OnInit {
                         );
                     } else if (event instanceof HttpResponse) {
                         this.message = event.body.message;
-                        this.isWaiting = true;
                         // show redirection message
-                        // this.redirecting = true;
+                        this.redirecting = true;
 
                         // redirect to view page after REDIRECTION_TIMEOUT ms passes
-                        // setTimeout(
-                        //     () =>
-                        //         this.router.navigateByUrl(
-                        //             `uikit/table/${fileType}`
-                        //         ),
-                        //     REDIRECTION_TIMEOUT
-                        // );
+                        setTimeout(
+                            () =>
+                                this.router.navigateByUrl(
+                                    `uikit/table/${fileType}`
+                                ),
+                            REDIRECTION_TIMEOUT
+                        );
                     }
                 },
                 (err) => {

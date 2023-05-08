@@ -1,12 +1,8 @@
 <p-toast></p-toast>
 <div class="card">
-    <p-toolbar styleClass="p-mb-4">
-        <ng-template pTemplate="left">
-                <button pButton pRipple type="button" label="New" class="p-button-rounded p-button-secondary" (click)="openNew()"></button>
-        </ng-template>
-    </p-toolbar>
+
     <div class="col-12 xl:col-12">
-        <p-table [value]="products" [scrollable]="true" dataKey="id" [paginator]="true" [rows]="5"
+        <p-table [value]="users" [scrollable]="true" dataKey="id" [paginator]="true" [rows]="5"
             [rowsPerPageOptions]="[5,10,20,30]" editMode="row" [tableStyle]="{'min-width': '50rem'}" [lazy]="true"
             [totalRecords]="totalRecords" (onLazyLoad)="paramUpdate($event)"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]=true
@@ -23,16 +19,12 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th [pSortableColumn]="header" [style]="'width: ' + (100/ (headers.length +customAttributes.length + 1)) + '%'"
+                    <th [pSortableColumn]="header" [style]="'width: ' + (100/ headers.length + 1) + '%'"
                         *ngFor="let header of headers">
                         {{ header }}
                         <p-sortIcon field="header"></p-sortIcon>
                     </th>
-                    <th [style]="'width: ' + (100/ (headers.length +customAttributes.length + 1))  + '%'"
-                        *ngFor="let header of customAttributes">
-                        {{ header }}
-                    </th>
-                    <th [style]="'width: ' + (100/ (headers.length +customAttributes.length + 1))  + '%'"></th>
+                    <th [style]="'width: ' + (100/ headers.length + 1) + '%'"></th>
                 </tr>
 
             </ng-template>
@@ -40,23 +32,22 @@
                 <tr [pEditableRow]="product">
                     <td *ngFor="let header of headers">
                         <p-cellEditor>
-                            <ng-template pTemplate="input">
+                            <ng-template *ngIf="header !== 'role'" pTemplate="input">
                                 <input pInputText type="text" [readOnly]="header === 'id'"
                                     [(ngModel)]="product[header]">
                             </ng-template>
-                            <ng-template pTemplate="output">
+                            <ng-template *ngIf="header === 'role'" pTemplate="input">
+                                <select pSelect
+                                    [(ngModel)]="product[header].role">
+                                <option value="ADMIN" [selected]="product[header].role === 'ADMIN'">ADMIN</option>
+                                <option value="CONSULTANT" [selected]="product[header].role === 'CONSULTANT'">CONSULTANT</option>
+                                </select>
+                            </ng-template>
+                            <ng-template *ngIf="header !== 'role'" pTemplate="output">
                                 {{product[header]}}
                             </ng-template>
-                        </p-cellEditor>
-                    </td>
-
-                    <td *ngFor="let header of customAttributes">
-                        <p-cellEditor>
-                            <ng-template pTemplate="output" *ngIf="product['customAttributes']">
-                                {{product["customAttributes"][header]}}
-                            </ng-template>
-                            <ng-template pTemplate="output" *ngIf="!product['customAttributes']">
-                                
+                            <ng-template *ngIf="header === 'role'" pTemplate="output">
+                                {{product[header].role}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -80,24 +71,5 @@
         </p-table>
     </div>
 </div>
-
-<p-dialog [(visible)]="productDialog && addForm" [style]="{width: '450px'}" [modal]="true" styleClass="p-fluid"
-    header="File Details">
-    <ng-template pTemplate="content">
-        <form [formGroup]="addForm">
-            <div class="p-field" *ngFor="let header of headers">
-                <div *ngIf="header !== 'id'">
-                    <p class="p-mb-3" for="name">{{header}}</p>
-                    <input [name]="header" [formControlName]="header" type="text" pInputText required autofocus />
-                </div>
-            </div>
-        </form>
-    </ng-template>
-
-    <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
-    </ng-template>
-</p-dialog>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
