@@ -11,14 +11,14 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
 import { MessageService, LazyLoadEvent, SortEvent } from "primeng/api";
 import { BehaviorSubject, firstValueFrom, take, throttleTime } from "rxjs";
-import { UploadFileService } from "src/app/services/upload-file.service";
+import { AdminService, User } from "src/app/services/admin.service";
 
 // throttle time between input and emitting search
 const INPUT_THROTTLE_MS = 1000;
 
 @Component({
-    selector: "app-tableedit",
-    templateUrl: "./tableedit.component.html",
+    selector: "app-usertable",
+    templateUrl: "./usertable.component.html",
     styles: [
         `
             :host ::ng-deep .p-cell-editing {
@@ -28,9 +28,8 @@ const INPUT_THROTTLE_MS = 1000;
         `,
     ],
 })
-export class TableeditComponent implements OnChanges, OnInit {
-    @Input() fileType: string = "";
-    @Input() products: any;
+export class UsertableComponent implements OnChanges, OnInit {
+    @Input() users: any;
 
     @Input() totalRecords: number;
 
@@ -42,20 +41,19 @@ export class TableeditComponent implements OnChanges, OnInit {
     @Output() onSave = new EventEmitter();
     @Output() onInputUpdated = new EventEmitter<string>();
 
-    productDialog: boolean;
+    userDialog: boolean;
     product: any;
     submitted: boolean;
     public headers: string[] = [];
     public data: string[] = [];
-    clonedProducts: { [s: string]: any } = {};
+    clonedUsers: { [s: string]: any } = {};
     addForm: FormGroup;
     globalFilter: true;
     throttledInput = new BehaviorSubject("");
-    public customAttributes: any[] = [];
 
     constructor(
         private http: HttpClient,
-        private uploadFileService: UploadFileService,
+        private adminService: AdminService,
         private messageService: MessageService
     ) {}
 
@@ -73,16 +71,9 @@ export class TableeditComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (!changes || !changes["products"] || !this.products?.length) return;
-        this.headers = Object.keys(this.products[0]).filter(key => key !== "customAttributes");
-        this.customAttributes = [...this.products.reduce((acc, product) => {
-            if (product.customAttributes) Object.keys(product.customAttributes).forEach(key => {
-                acc.add(key);
-            });
-            return acc
-        }, new Set())]
-        console.log("HETE >>>>>>>>>", this.customAttributes)
-        this.productDialog = false;
+        if (!changes || !changes["users"] || !this.users?.length) return;
+        this.headers = Object.keys(this.users[0]).filter(header => header !== "password");
+        this.userDialog = false;
         this.addForm = new FormGroup(
             this.headers.reduce((acc, header) => {
                 if (header !== "id") {
@@ -94,7 +85,7 @@ export class TableeditComponent implements OnChanges, OnInit {
     }
 
     onRowEditInit(product: any) {
-        this.clonedProducts[product.id] = { ...product };
+        this.clonedUsers[product.id] = { ...product };
     }
 
     paramUpdate(event: LazyLoadEvent) {
@@ -105,88 +96,61 @@ export class TableeditComponent implements OnChanges, OnInit {
         this.sortFunction.emit(event);
     }
 
-    async onRowDelete(product: any) {
+    async onRowDelete(user: User) {
         try {
-            await firstValueFrom(
-                this.uploadFileService.delete(this.fileType, product.id)
+           const deleted = await firstValueFrom(
+                this.adminService.deleteUser(user.id)
             );
-            this.messageService.add({
-                severity: "success",
-                summary: "Success",
-                detail: `${this.fileType} is deleted`,
-            });
+            if (deleted) {
+                this.messageService.add({
+                    severity: "success",
+                    summary: "Success",
+                    detail: `User: ${user.email} is deleted`,
+                });
+            } else {
+                this.messageService.add({
+                    severity: "error",
+                    summary: "Error",
+                    detail: `Error while deleting ${user.email}`,
+                });
+            }
+            
             //Here we inform the parent about the changes
             this.onDelete.emit();
         } catch (error: unknown) {
             this.messageService.add({
                 severity: "error",
                 summary: "Error",
-                detail: `Error while deleting ${this.fileType}`,
+                detail: `Error while deleting ${user.email}`,
             });
         }
     }
-    async onRowEditSave(product: any) {
+    async onRowEditSave(user: User) {
+
+        user.role.id = user.role.role === "ADMIN" ? 0 : 1;
         try {
             await firstValueFrom(
-                this.uploadFileService.edit(this.fileType, product)
+                this.adminService.updateUser(user)
             );
             this.messageService.add({
                 severity: "success",
                 summary: "Success",
-                detail: `${this.fileType} is updated.`,
+                detail: `${user.email} is updated.`,
             });
             this.onEdit.emit();
         } catch (error: unknown) {
             this.messageService.add({
                 severity: "error",
                 summary: "Error",
-                detail: `Error while updating ${this.fileType}`,
+                detail: `Error while updating ${user.email}`,
             });
         }
     }
 
-    async saveProduct() {
-        if (this.addForm.invalid) return;
-        const product = this.headers.reduce((acc, header) => {
-            if (header !== "id") {
-                acc[header] = this.addForm.get(header).value;
-                // console.log(header);
-                //console.log(acc)
-            }
-            return acc;
-        }, {});
-
-        console.log(product);
-        try {
-            await firstValueFrom(
-                this.uploadFileService.save(this.fileType, product)
-            );
-            this.messageService.add({
-                severity: "success",
-                summary: "Success",
-                detail: `A new ${this.fileType} is added.`,
-            });
-
-            this.hideDialog();
-            this.submitted = true;
-            this.onSave.emit();
-        } catch (error: unknown) {
-            this.messageService.add({
-                severity: "error",
-                summary: "Error",
-                detail: `Error while adding new ${this.fileType}`,
-            });
-        }
-    }
     onRowEditCancel(product: any, index: number) {}
-    openNew() {
-        this.product = {};
-        this.submitted = false;
-        this.productDialog = true;
-    }
 
     hideDialog() {
-        this.productDialog = false;
+        this.userDialog = false;
         this.submitted = false;
         // reset the form
         this.addForm.reset();

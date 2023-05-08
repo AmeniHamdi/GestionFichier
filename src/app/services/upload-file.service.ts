@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { user } from '../demo/domain/user.model';
 import { Router } from '@angular/router';
+import jwt_decode from "jwt-decode";
+
 
 
 @Injectable({
@@ -12,24 +14,41 @@ import { Router } from '@angular/router';
 })
 export class UploadFileService {
 
-  private baseUrl = 'http://192.168.56.3:8086/api/csv';
-  private authUrl ='http://192.168.56.3:8086/auth';
+  private baseUrl = 'http://localhost:8087/api/csv';
+  private authUrl ='http://localhost:8087/auth';
   
   constructor(private http: HttpClient,private router: Router) { }
 
   //Upload a csv file
-  upload(file: File , data: any): Observable<HttpEvent<any>>{
+  upload(file: File): Observable<HttpEvent<any>>{
       const formData: FormData = new FormData();
 
       formData.append('file',file);
 
-      const req = new HttpRequest('POST', `${this.baseUrl}/${data}/upload`, formData, {
+      // const url = data === "tier" ? `${this.baseUrl}/${data}/test-kafka` : `${this.baseUrl}/${data}/upload`
+
+      const req = new HttpRequest('POST', `${this.baseUrl}/kafka/upload`, formData, {
         reportProgress: true,
         responseType: 'json'
       });
 
       return this.http.request(req);
   }
+
+  uploadCSV(file: File, type: string): Observable<HttpEvent<any>>{
+    const formData: FormData = new FormData();
+
+    formData.append('file',file);
+
+    // const url = data === "tier" ? `${this.baseUrl}/${data}/test-kafka` : `${this.baseUrl}/${data}/upload`
+
+    const req = new HttpRequest('POST', `${this.baseUrl}/${type}/upload`, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+
+    return this.http.request(req);
+}
     // Add a new Row
     save(type: string, toAdd: any) {
       return this.http.post(`${this.baseUrl}/${type}`, toAdd);
@@ -94,7 +113,12 @@ export class UploadFileService {
 
   isLoggedIn(): boolean {
     return sessionStorage.getItem("token") !== null;
-}
+  }
+
+  isAdmin(): boolean {
+    const {authorities} = jwt_decode(sessionStorage.getItem("token")) as any;
+    return authorities.authority === "ADMIN";
+  }
 
 
 logout() {

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import jwt_decode from "jwt-decode";
 
 @Component({
     selector: 'app-menu',
@@ -10,17 +11,16 @@ import {Component, OnInit} from '@angular/core';
     `
 })
 export class AppMenuComponent implements OnInit {
-
     model: any[];
 
     ngOnInit() {
         this.model = [
-            // {
-            //     label: 'Home Page', icon: 'pi pi-fw pi-home',
-            //     items: [
-            //         {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/uikit']}
-            //     ]
-            // },
+            {
+                label: 'Home Page', icon: 'pi pi-fw pi-home',
+                items: [
+                    {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/uikit/dashboard']}
+                ]
+            },
             {
                 label: 'File Section', icon: 'pi pi-fw pi-star-fill', routerLink: ['/uikit'],
                 items: [
@@ -29,10 +29,12 @@ export class AppMenuComponent implements OnInit {
                     // {label: 'Float Label', icon: 'pi pi-bookmark', routerLink: ['/uikit/floatlabel']},
                     // {label: 'Invalid State', icon: 'pi pi-exclamation-circle', routerLink: ['/uikit/invalidstate']},
                     // {label: 'Button', icon: 'pi pi-fw pi-mobile', routerLink: ['/uikit/button'], class: 'rotated-icon'},
+                    {label: 'Csv', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/csv']},
                     {label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file']},
                     {label: 'Tiers', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table/tier']},
                     {label: 'Dossier', icon: 'pi pi-fw pi-folder', routerLink: ['/uikit/table/dossier']},
                     {label: 'Contrat', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/table/contrat']},
+                    //{label: 'Admin Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/admin']},
                     // {label: 'List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/list']},
                     // {label: 'Tree', icon: 'pi pi-fw pi-share-alt', routerLink: ['/uikit/tree']},
                     // {label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel']},
@@ -130,5 +132,11 @@ export class AppMenuComponent implements OnInit {
             //     ]
             // }
         ];
+
+        console.log(jwt_decode(sessionStorage.getItem("token")))
+    const {authorities} = jwt_decode(sessionStorage.getItem("token")) as any;
+    if (authorities.authority === "ADMIN") {
+        this.model[0].items.push({label: 'Admin Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/admin']})
+    }
     }
 }

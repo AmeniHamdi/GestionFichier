@@ -27,3 +27,22 @@ export class UserAccessGuard implements CanActivate {
         return true;
     }
 }
+
+@Injectable({
+    providedIn: "root",
+})
+export class AdminAccessGuard implements CanActivate {
+    constructor(
+        private uploadService: UploadFileService,
+        private router: Router
+    ) {}
+
+    canActivate(): boolean {
+        //only logged users
+        if (!this.uploadService.isAdmin()) {
+            this.router.navigateByUrl("/");
+            return false;
+        }
+        return true;
+    }
+}

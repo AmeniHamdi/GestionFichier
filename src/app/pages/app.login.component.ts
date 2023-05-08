@@ -57,7 +57,7 @@ submitted :boolean;
             if (!response.error)
             { 
               sessionStorage.setItem("token", response.token);
-              this.router.navigate(['/uikit/file']);
+              this.router.navigate(['/uikit/csv']);
               return  }
               
 

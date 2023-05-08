@@ -1,6 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { CustomerService } from "../service/customerservice";
-import { ProductService } from "../service/productservice";
 import { BreadcrumbService } from "../../app.breadcrumb.service";
 import {
     MessageService,
@@ -9,11 +7,9 @@ import {
     SortEvent,
 } from "primeng/api";
 import { firstValueFrom, Observable } from "rxjs";
-import { UploadFileService } from "src/app/services/upload-file.service";
-import { ActivatedRoute, Router } from "@angular/router";
-const ALLOWED_TYPES = ["tier", "dossier", "contrat"];
+import { AdminService } from "src/app/services/admin.service";
 @Component({
-    templateUrl: "./tabledemo.component.html",
+    templateUrl: "./adminpanel.component.html",
     providers: [MessageService, ConfirmationService],
     styleUrls: ["../../../assets/demo/badges.scss"],
     styles: [
@@ -32,10 +28,9 @@ const ALLOWED_TYPES = ["tier", "dossier", "contrat"];
         `,
     ],
 })
-export class TableDemoComponent implements OnInit {
-    fileContent!: Observable<any>;
+export class AdminPanelComponent implements OnInit {
+    userList!: Observable<any>;
     totalRecords: number;
-    fileType = "";
     private size: number;
     private page: number;
     private sortField: string;
@@ -45,14 +40,8 @@ export class TableDemoComponent implements OnInit {
     loading = true;
 
     constructor(
-        private router: Router,
-        private uploadService: UploadFileService,
-        private activatedRoute: ActivatedRoute,
-        customerService: CustomerService,
-        private productService: ProductService,
-        private breadcrumbService: BreadcrumbService,
-        private messageService: MessageService,
-        private confirmService: ConfirmationService
+        private adminService: AdminService,
+        private breadcrumbService: BreadcrumbService
     ) {
         this.breadcrumbService.setItems([
             { label: "UI Kit" },
@@ -61,10 +50,8 @@ export class TableDemoComponent implements OnInit {
     }
     // Reload content after delete or edit
     async reloadContent() {
-        if (!this.fileType) return;
         const { count, rows } = await firstValueFrom(
-            this.uploadService.getAllObjects(
-                this.fileType,
+            this.adminService.listUsers(
                 this.size,
                 this.page,
                 this.sortField,
@@ -72,7 +59,7 @@ export class TableDemoComponent implements OnInit {
                 this.searchTerm
             )
         );
-        this.fileContent = rows;
+        this.userList = rows;
         this.totalRecords = count;
     }
 
@@ -91,22 +78,10 @@ export class TableDemoComponent implements OnInit {
     }
 
     async ngOnInit() {
-        //const params = await firstValueFrom(this.activatedRoute.params)
-        this.activatedRoute.params.subscribe((params) => {
-            if (
-                !params["fileType"] ||
-                !ALLOWED_TYPES.includes(params["fileType"])
-            ) {
-                //if fileType is not passed as param redirect to /upload
-                return this.router.navigateByUrl("uikit/csv");
-            }
-            this.fileType = params["fileType"];
+        this.sortField = "id";
+        this.asc = true;
 
-            this.sortField = "id";
-            this.asc = true;
-
-            // load content for the first time
-            return this.reloadContent();
-        });
+        // load content for the first time
+        return this.reloadContent();
     }
 }

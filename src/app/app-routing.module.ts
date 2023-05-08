@@ -12,6 +12,7 @@ import {MiscDemoComponent} from './demo/view/miscdemo.component';
 import {EmptyDemoComponent} from './demo/view/emptydemo.component';
 import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
 import {FileDemoComponent} from './demo/view/filedemo.component';
+import {CSVComponent} from './demo/view/csv.component';
 import {DocumentationComponent} from './demo/view/documentation.component';
 import {AppMainComponent} from './app.main.component';
 import {AppNotfoundComponent} from './pages/app.notfound.component';
@@ -32,7 +33,8 @@ import {AppHelpComponent} from './pages/app.help.component';
 import {AppWizardComponent} from './pages/app.wizard.component';
 import {BlocksComponent} from './blocks/blocks/blocks.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { UserAccessGuard } from 'src/security/user-access.guard';
+import { AdminAccessGuard, UserAccessGuard } from 'src/security/user-access.guard';
+import { AdminPanelComponent } from './demo/view/adminpanel.component';
 
 @NgModule({
     imports: [
@@ -40,7 +42,7 @@ import { UserAccessGuard } from 'src/security/user-access.guard';
             {
                 path: 'uikit', component: AppMainComponent,
                 children: [
-                    {path: '', component: DashboardDemoComponent},
+                    {path: 'dashboard', component: DashboardDemoComponent},
                     {path: 'formlayout', component: FormLayoutDemoComponent},
                     {path: 'floatlabel', component: FloatLabelDemoComponent},
                     {path: 'invalidstate', component: InvalidStateDemoComponent},
@@ -48,6 +50,7 @@ import { UserAccessGuard } from 'src/security/user-access.guard';
                     {path: 'button', component: ButtonDemoComponent},
                     //{path: 'table', component: TableDemoComponent},
                     {path: 'table/:fileType', component: TableDemoComponent},
+                    {path: 'admin', component: AdminPanelComponent, canActivate: [AdminAccessGuard]},
                     {path: 'list', component: ListDemoComponent},
                     {path: 'tree', component: TreeDemoComponent},
                     {path: 'panel', component: PanelsDemoComponent},
@@ -57,6 +60,7 @@ import { UserAccessGuard } from 'src/security/user-access.guard';
                     {path: 'message', component: MessagesDemoComponent},
                     {path: 'misc', component: MiscDemoComponent},
                     {path: 'charts', component: ChartsDemoComponent},
+                    {path: 'csv', component: CSVComponent},
                     {path: 'file', component: FileDemoComponent},
                     {path: 'utilities/icons', component: IconsComponent},
                     {path: 'pages/crud', component: AppCrudComponent},

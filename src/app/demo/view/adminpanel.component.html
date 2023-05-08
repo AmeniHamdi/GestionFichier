@@ -1,0 +1,6 @@
+<app-usertable [users]="userList"  (onDelete)="reloadContent()" 
+(onEdit)="reloadContent()" (onSave)="reloadContent()" (onLazyLoad)="onLazyLoad($event)" (onInputUpdated)="onSearchTerm($event)"
+[totalRecords]="totalRecords"  />
+
+
+
