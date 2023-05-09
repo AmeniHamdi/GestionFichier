@@ -422,12 +422,28 @@
                 </div>
             </div>
         </div> -->
-
+        
+        <div class="card flex justify-content-center">
+             <p-chart type="pie" [data]="data" [options]="options"></p-chart>
+        </div>
+        <div class="col-12 md:col-12 lg:col-12">
+            <div class="card card-w-title">
+                <iframe src="https://us5.datadoghq.com/graph/embed?token=37b6f1aa3616b3f9e0578851ea7c942dc50a602fa3c832c48e2a1451b4387097&height=300&width=600&legend=true" width="600" height="300" frameborder="0"></iframe>
+                <iframe src="https://us5.datadoghq.com/graph/embed?token=2503582e83153652b487b52036526b0e3b5daac5686f6337080d9568193cdd91&height=300&width=600&legend=true" width="600" height="300" frameborder="0"></iframe>
+            </div>
+        </div>
+        <div class="col-12 md:col-12 lg:col-12">
+            <div class="card card-w-title">
+                <iframe src="https://us5.datadoghq.com/graph/embed?token=99a0de0814efc5823212e6f8e630b9b65d84211856e71860937c0d631b099b0f&height=300&width=600&legend=true" width="600" height="300" frameborder="0"></iframe>
+            </div>
+        </div>
         <div class="col-12 md:col-12 lg:col-12">
             <div class="card card-w-title">
                 <h5>Schedule</h5>
                 <full-calendar [options]="fullCalendarOptions"></full-calendar>
             </div>
         </div>
+        
+        
     </div>
 </div>
