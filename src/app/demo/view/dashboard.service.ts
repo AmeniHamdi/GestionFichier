@@ -31,4 +31,8 @@ export class dashboardservice {
  {
   return this.http.get(`${this.baseUrl}/tier/count`);
  }
+ getUsersCount():Observable<any>
+ {
+  return this.http.get(`${this.baseUrl}/admin/users/count`);
+ }
 }

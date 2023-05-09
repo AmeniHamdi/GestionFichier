@@ -63,7 +63,7 @@ export class DashboardDemoComponent implements OnInit {
     countContract : any;
     countDossier : any;
     countTier : any ;
-
+    countUser : any ;
     constructor(private productService: ProductService, private dashboardservice: dashboardservice, private eventService: EventService, private breadcrumbService: BreadcrumbService) {
         this.breadcrumbService.setItems([
             {label: 'Dashboard', routerLink: ['']}
@@ -115,7 +115,13 @@ export class DashboardDemoComponent implements OnInit {
             });
           });
         });
-          
+        this.dashboardservice.getUsersCount().subscribe((UserResponse: any) => {
+            console.log(UserResponse);
+            this.countUser = UserResponse;
+
+        });
+        
+             
         
         // this.chartData = {
         //     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -223,6 +229,8 @@ export class DashboardDemoComponent implements OnInit {
         //     selectMirror: true,
         //     dayMaxEvents: true,
         // };
+
+        
 
         
         const documentStyle = getComputedStyle(document.documentElement);
