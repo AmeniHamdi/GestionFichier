@@ -1,30 +1,40 @@
 <div class="layout-dashboard">
     <div class="grid">
 
-        <!-- <div class="col-12 lg:col-6 xl:col-3">
+        <div class="col-12 lg:col-6 xl:col-3">
             <div class="overview-box sales">
-                <i class="overview-icon pi pi-dollar"></i>
-                <span class="overview-title">Sales</span>
+                <i class="overview-icon pi pi-folder"></i>
+                <span class="overview-title">Dossiers</span>
                 <i class="overview-arrow pi pi-chevron-circle-up"></i>
                 <div class="overview-numbers">
-                    $ 92,440
+                    {{countDossier}}
                 </div>
                 <div class="overview-subinfo">
-                    21% more than yesterday
+                    
                 </div>
             </div>
         </div>
         <div class="col-12 lg:col-6 xl:col-3">
             <div class="overview-box views">
-                <i class="overview-icon pi pi-search"></i>
-                <span class="overview-title">Views</span>
+                <i class="overview-icon pi  pi-file-o"></i>
+                <span class="overview-title">Contrats</span>
                 <i class="overview-arrow pi pi-chevron-circle-up"></i>
                 <div class="overview-numbers">
-                    7029
+                    {{countContract}}
                 </div>
-                <div class="overview-subinfo">
-                    2% more than yesterday
+                
+            </div>
+        </div>
+        
+        <div class="col-12 lg:col-6 xl:col-3">
+            <div class="overview-box checkin">
+                <i class="overview-icon pi pi-fw pi-table"></i>
+                <span class="overview-title">Tiers</span>
+                <i class="overview-arrow pi pi-chevron-circle-up"></i>
+                <div class="overview-numbers">
+                    {{countTier}}
                 </div>
+                
             </div>
         </div>
         <div class="col-12 lg:col-6 xl:col-3">
@@ -33,53 +43,32 @@
                 <span class="overview-title">Users</span>
                 <i class="overview-arrow pi pi-chevron-circle-up"></i>
                 <div class="overview-numbers">
-                    9522
+                    {{countUser}}
                 </div>
-                <div class="overview-subinfo">
-                    7% more than yesterday
-                </div>
+                
             </div>
         </div>
-        <div class="col-12 lg:col-6 xl:col-3">
-            <div class="overview-box checkin">
-                <i class="overview-icon pi pi-map-marker"></i>
-                <span class="overview-title">Check-Ins</span>
-                <i class="overview-arrow pi pi-chevron-circle-up"></i>
-                <div class="overview-numbers">
-                    4211
-                </div>
-                <div class="overview-subinfo">
-                    18% more than yesterday
-                </div>
-            </div>
-        </div> -->
 
-         <!-- <div class="col-12 lg:col-8">
+         <div class="col-12 lg:col-8">
             <div class="card card-w-title statistics">
-                <h5>Statistics</h5>
-                <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
+                
+                <div style="width: 100%; height: 10%;" >
+                    <div class="card card-w-title">
+                        <p-chart type="bar" [data]="basicData" [options]="basicOptions" style="height: 400px; width: 100%;"></p-chart>
+        
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-12 md:col-12 lg:col-4">
-            <div class="card card-w-title tasks">
-                <h5>Tasks</h5>
-                <ul>
-                    <li>
-                        <p-checkbox binary="true"></p-checkbox>
-                        <span>Upload Reports</span>
-                        <span class="task-badge red"></span>
-                    </li>
-                    <li>
-                        <p-checkbox binary="true"></p-checkbox>
-                        <span>Client Meeting</span>
-                        <span class="task-badge green"></span>
-                    </li>
-                   
-                </ul>
+        <div class="col-12 md:col-12 lg:col-4" >
+            <div class="card card-w-title statistics" style="width: 100%;">
+                <div class="card card-w-title">
+                    <h5 style="text-align: center;">Nombre de document par type</h5>
+                    <p-chart type="pie" [data]="data" [options]="options"></p-chart>
             </div>
-        </div> -->
+        </div>
 
-        <!--
+<!--         
         <div class="col-12 lg:col-4">
             <div class="user-card card">
                 <div class="user-card-header">
@@ -423,24 +412,33 @@
             </div>
         </div> -->
         
-        <div class="card flex justify-content-center">
-             <p-chart type="pie" [data]="data" [options]="options"></p-chart>
+        
         </div>
-        <div class="col-12 md:col-12 lg:col-12">
-            <div class="card card-w-title">
-                <iframe src="https://us5.datadoghq.com/graph/embed?token=37b6f1aa3616b3f9e0578851ea7c942dc50a602fa3c832c48e2a1451b4387097&height=300&width=600&legend=true" width="600" height="300" frameborder="0"></iframe>
-                <iframe src="https://us5.datadoghq.com/graph/embed?token=2503582e83153652b487b52036526b0e3b5daac5686f6337080d9568193cdd91&height=300&width=600&legend=true" width="600" height="300" frameborder="0"></iframe>
-            </div>
-        </div>
-        <div class="col-12 md:col-12 lg:col-12">
+        <div style="width: 50%;" class="col-12 md:col-12 lg:col-12">
             <div class="card card-w-title">
                 <iframe src="https://us5.datadoghq.com/graph/embed?token=99a0de0814efc5823212e6f8e630b9b65d84211856e71860937c0d631b099b0f&height=300&width=600&legend=true" width="600" height="300" frameborder="0"></iframe>
+
+
             </div>
         </div>
-        <div class="col-12 md:col-12 lg:col-12">
+        <div style="width: 50%;" class="col-12 md:col-12 lg:col-12">
             <div class="card card-w-title">
-                <h5>Schedule</h5>
-                <full-calendar [options]="fullCalendarOptions"></full-calendar>
+                <iframe src="https://us5.datadoghq.com/graph/embed?token=2503582e83153652b487b52036526b0e3b5daac5686f6337080d9568193cdd91&height=300&width=600&legend=true" width="600" height="300" frameborder="0"></iframe>
+
+
+
+            </div>
+        </div>
+        <!-- <div class="col-12 md:col-12 lg:col-12">
+            <div class="card card-w-title">
+            </div>
+        </div> -->
+        
+        
+        <div style="width: 50%;" class="col-12 md:col-12 lg:col-12">
+            <div class="card card-w-title">
+                <iframe src="https://us5.datadoghq.com/graph/embed?token=37b6f1aa3616b3f9e0578851ea7c942dc50a602fa3c832c48e2a1451b4387097&height=300&width=600&legend=true" width="600" height="300" frameborder="0"></iframe>
+
             </div>
         </div>
         

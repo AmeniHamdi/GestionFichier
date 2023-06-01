@@ -1,6 +1,55 @@
 <p-toast></p-toast>
 <div class="card">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <button pButton pRipple type="button" label="New" class="p-button-rounded p-button-secondary" (click)="showDialog()"></button>
+      </ng-template>
+    </p-toolbar>
+   
+    <p-dialog header="Add user" [(visible)]="displayDialog" [modal]="true" [responsive]="true" >
+        <form [formGroup]="SignUpForm" (ngSubmit)="submitForm()" class="form-container">
+            <div class="login-input-wrapper">
+                <input type="text" autocomplete="off" placeholder="First Name" formControlName="firstName" [(ngModel)]="userInfo.firstName"
+                    pInputText>
+                <i class="pi pi-user"></i>
+                <span *ngIf="SignUpForm.get('firstName')?.errors?.['required'] && SignUpForm.get('firstName')?.touched  " class="help-block" > First Name required</span>
 
+            </div>
+            <div class="login-input-wrapper">
+                <input type="text" autocomplete="off" placeholder="Last Name" formControlName="lastName" [(ngModel)]="userInfo.lastName"
+                    pInputText >
+                <i class="pi pi-user"></i>
+                <span *ngIf="SignUpForm.get('lastName')?.errors?.['required'] && SignUpForm.get('lastName')?.touched  " class="help-block" > Last Name required</span>
+            </div>
+
+            <div class="login-input-wrapper">
+                <input type="email" autocomplete="off" placeholder="Email" formControlName="email" [(ngModel)]="userInfo.email" pInputText>
+                <i class="pi pi-at"></i>
+                <span *ngIf="!SignUpForm.get('email')?.errors?.['required'] && SignUpForm.get('email')?.touched && SignUpForm.get('email')?.invalid " class="help-block" > Please enter a valid email</span>
+                <span *ngIf="SignUpForm.get('email')?.errors?.['required'] && SignUpForm.get('email')?.touched  " class="help-block" > email required</span>
+               
+            </div>
+
+
+
+            <div class="login-input-wrapper">
+                <input type="password" autocomplete="off" placeholder="Password" formControlName="password" [(ngModel)]="userInfo.password
+            " pInputText>
+                <i class="pi pi-lock"></i>
+                <span *ngIf="SignUpForm.get('password')?.errors?.required && SignUpForm.get('password')?.touched" class="help-block">password required</span>
+                <span *ngIf="SignUpForm.get('password')?.errors?.minlength && SignUpForm.get('password')?.touched" class="help-block">password must be at least 8 characters long</span>
+                
+
+            </div>
+            <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+            <span>{{SignUpForm.valid}}</span>
+          <div class="form-buttons">
+            <button type="submit" pButton label="Add" (click)="saveUser()" [disabled]="!SignUpForm.valid" ></button>
+            <button type="button" (click)="newHideDialog()" pButton label="Cancel" class="p-button-secondary"></button>
+          </div>
+        </form>
+      </p-dialog>
+      
     <div class="col-12 xl:col-12">
         <p-table [value]="users" [scrollable]="true" dataKey="id" [paginator]="true" [rows]="5"
             [rowsPerPageOptions]="[5,10,20,30]" editMode="row" [tableStyle]="{'min-width': '50rem'}" [lazy]="true"

@@ -1,0 +1,36 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 400px; /* Adjust the desired width */
+  }
+  
+  .login-input-wrapper {
+    position: relative;
+  }
+  
+  .login-input-wrapper input {
+    padding-left: 2.5rem; /* Adjust the desired padding */
+    width: 100%; /* Use full width of the container */
+  }
+  
+  .login-input-wrapper i {
+    position: absolute;
+    top: 50%;
+    left: 0.75rem; /* Adjust the desired position */
+    transform: translateY(-50%);
+  }
+  
+  .help-block {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem; /* Adjust the desired margin */
+  }
+  

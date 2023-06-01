@@ -60,10 +60,16 @@ export class DashboardDemoComponent implements OnInit {
 
     fullCalendarOptions: any;
 
+    tiers: any[] = [];
+    basicData: any;
+
+    basicOptions: any;
+
     countContract : any;
     countDossier : any;
     countTier : any ;
-
+    countUser : any ;
+    
     constructor(private productService: ProductService, private dashboardservice: dashboardservice, private eventService: EventService, private breadcrumbService: BreadcrumbService) {
         this.breadcrumbService.setItems([
             {label: 'Dashboard', routerLink: ['']}
@@ -101,6 +107,7 @@ export class DashboardDemoComponent implements OnInit {
                   }
                 ]
               };
+              
           
               this.options = {
                 plugins: {
@@ -115,7 +122,86 @@ export class DashboardDemoComponent implements OnInit {
             });
           });
         });
+        this.dashboardservice.getUsersCount().subscribe((UserResponse: any) => {
+            console.log(UserResponse);
+            this.countUser = UserResponse;
+
+        });
+
+        this.dashboardservice.getTiersCountByNumero().subscribe((tiers: any[]) => {
+          this.tiers = tiers;
+          console.log("here",tiers);
+
+         const numeros=  tiers.map(tier => tier.numero);
+         console.log("num",numeros);
+         const count = tiers.map(tier => tier.count);
+         console.log("count",count);
+
+         const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+        this.basicData = {
+            labels: numeros,
+            datasets: [
+                {
+                    label: 'Nombre de tiers avec le meme numero',
+                    data: count,
+                    backgroundColor: [  'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+                    borderColor: [  'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                    borderWidth: 1
+                }
+            ]
+        };
+        const axisNames = {
+            x: 'Nombres de Tiers',
+            y: 'Nombre de Tiers avec le même numéro'
+          };
+        this.basicOptions = {
+            scales: {
+              xAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: axisNames.x
+                },
+                ticks: {
+                  beginAtZero: true,
+                  fontColor: textColorSecondary
+                },
+                gridLines: {
+                  color: surfaceBorder,
+                  drawBorder: false
+                }
+              }],
+              yAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: axisNames.y
+                },
+                ticks: {
+                  beginAtZero: true,
+                  fontColor: textColorSecondary
+                },
+                gridLines: {
+                  color: surfaceBorder,
+                  drawBorder: false
+                }
+              }]
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  color: textColor
+                }
+              }
+            }
+          };
           
+
+        });
+        
+             
         
         // this.chartData = {
         //     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -223,6 +309,8 @@ export class DashboardDemoComponent implements OnInit {
         //     selectMirror: true,
         //     dayMaxEvents: true,
         // };
+
+        
 
         
         const documentStyle = getComputedStyle(document.documentElement);
