@@ -69,6 +69,7 @@ export class DashboardDemoComponent implements OnInit {
     countDossier : any;
     countTier : any ;
     countUser : any ;
+    
     constructor(private productService: ProductService, private dashboardservice: dashboardservice, private eventService: EventService, private breadcrumbService: BreadcrumbService) {
         this.breadcrumbService.setItems([
             {label: 'Dashboard', routerLink: ['']}
@@ -106,6 +107,7 @@ export class DashboardDemoComponent implements OnInit {
                   }
                 ]
               };
+              
           
               this.options = {
                 plugins: {
@@ -144,45 +146,58 @@ export class DashboardDemoComponent implements OnInit {
             labels: numeros,
             datasets: [
                 {
-                    label: 'count',
+                    label: 'Nombre de tiers avec le meme numero',
                     data: count,
-                    backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
-                    borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                    backgroundColor: [  'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+                    borderColor: [  'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
                     borderWidth: 1
                 }
             ]
         };
+        const axisNames = {
+            x: 'Nombres de Tiers',
+            y: 'Nombre de Tiers avec le même numéro'
+          };
         this.basicOptions = {
-          plugins: {
-              legend: {
-                  labels: {
-                      color: textColor
-                  }
-              }
-          },
-          scales: {
-              y: {
+            scales: {
+              xAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: axisNames.x
+                },
+                ticks: {
                   beginAtZero: true,
-                  ticks: {
-                      color: textColorSecondary
-                      
-                  },
-                  grid: {
-                      color: surfaceBorder,
-                      drawBorder: false
-                  }
-              },
-              x: {
-                  ticks: {
-                      color: textColorSecondary
-                  },
-                  grid: {
-                      color: surfaceBorder,
-                      drawBorder: false
-                  }
+                  fontColor: textColorSecondary
+                },
+                gridLines: {
+                  color: surfaceBorder,
+                  drawBorder: false
+                }
+              }],
+              yAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: axisNames.y
+                },
+                ticks: {
+                  beginAtZero: true,
+                  fontColor: textColorSecondary
+                },
+                gridLines: {
+                  color: surfaceBorder,
+                  drawBorder: false
+                }
+              }]
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  color: textColor
+                }
               }
-          }
-      };
+            }
+          };
+          
 
         });
         

@@ -51,13 +51,19 @@
 
          <div class="col-12 lg:col-8">
             <div class="card card-w-title statistics">
-                <h5>Statistics</h5>
-                <iframe src="https://us5.datadoghq.com/graph/embed?token=37b6f1aa3616b3f9e0578851ea7c942dc50a602fa3c832c48e2a1451b4387097&height=300&width=600&legend=true" width="600" height="300" frameborder="0"></iframe>
+                
+                <div style="width: 100%; height: 10%;" >
+                    <div class="card card-w-title">
+                        <p-chart type="bar" [data]="basicData" [options]="basicOptions" style="height: 400px; width: 100%;"></p-chart>
+        
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-12 md:col-12 lg:col-4">
-            <div class="card card-w-title tasks">
-                <div class="card flex justify-content-center">
+        <div class="col-12 md:col-12 lg:col-4" >
+            <div class="card card-w-title statistics" style="width: 100%;">
+                <div class="card card-w-title">
+                    <h5 style="text-align: center;">Nombre de document par type</h5>
                     <p-chart type="pie" [data]="data" [options]="options"></p-chart>
             </div>
         </div>
@@ -408,20 +414,30 @@
         
         
         </div>
-        <div class="col-12 md:col-12 lg:col-12">
+        <div style="width: 50%;" class="col-12 md:col-12 lg:col-12">
             <div class="card card-w-title">
                 <iframe src="https://us5.datadoghq.com/graph/embed?token=99a0de0814efc5823212e6f8e630b9b65d84211856e71860937c0d631b099b0f&height=300&width=600&legend=true" width="600" height="300" frameborder="0"></iframe>
+
+
+            </div>
+        </div>
+        <div style="width: 50%;" class="col-12 md:col-12 lg:col-12">
+            <div class="card card-w-title">
                 <iframe src="https://us5.datadoghq.com/graph/embed?token=2503582e83153652b487b52036526b0e3b5daac5686f6337080d9568193cdd91&height=300&width=600&legend=true" width="600" height="300" frameborder="0"></iframe>
+
+
+
             </div>
         </div>
-        <div class="col-12 md:col-12 lg:col-12">
+        <!-- <div class="col-12 md:col-12 lg:col-12">
             <div class="card card-w-title">
-                
             </div>
-        </div>
-        <div class="col-12 md:col-12 lg:col-12">
+        </div> -->
+        
+        
+        <div style="width: 50%;" class="col-12 md:col-12 lg:col-12">
             <div class="card card-w-title">
-                <p-chart type="bar" [data]="basicData" [options]="basicOptions" style="height: 400px; width: 100%;"></p-chart>
+                <iframe src="https://us5.datadoghq.com/graph/embed?token=37b6f1aa3616b3f9e0578851ea7c942dc50a602fa3c832c48e2a1451b4387097&height=300&width=600&legend=true" width="600" height="300" frameborder="0"></iframe>
 
             </div>
         </div>

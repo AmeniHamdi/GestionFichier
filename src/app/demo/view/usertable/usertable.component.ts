@@ -12,6 +12,9 @@ import { HttpClient } from "@angular/common/http";
 import { MessageService, LazyLoadEvent, SortEvent } from "primeng/api";
 import { BehaviorSubject, firstValueFrom, take, throttleTime } from "rxjs";
 import { AdminService, User } from "src/app/services/admin.service";
+import { user } from "src/app/demo/domain/user.model";
+import { UploadFileService } from "src/app/services/upload-file.service";
+import { Router } from "@angular/router";
 
 // throttle time between input and emitting search
 const INPUT_THROTTLE_MS = 1000;
@@ -27,6 +30,7 @@ const INPUT_THROTTLE_MS = 1000;
             }
         `,
     ],
+    styleUrls: ['./usertable.component.css']
 })
 export class UsertableComponent implements OnChanges, OnInit {
     @Input() users: any;
@@ -50,8 +54,21 @@ export class UsertableComponent implements OnChanges, OnInit {
     addForm: FormGroup;
     globalFilter: true;
     throttledInput = new BehaviorSubject("");
+    SignUpForm: FormGroup = new FormGroup({
+        firstName: new FormControl("", Validators.required),
+        lastName: new FormControl("", Validators.required),
+        email: new FormControl("", [Validators.required, Validators.email]),
+        password: new FormControl("", [
+            Validators.required,
+            Validators.minLength(8),
+        ]),
+        confirmPassword: new FormControl ('', Validators.required),
+    });
+    userInfo: user = { firstName: "", lastName: "", password: "", email: "" };
 
     constructor(
+        private router: Router,
+        private uploadFileService: UploadFileService,
         private http: HttpClient,
         private adminService: AdminService,
         private messageService: MessageService
@@ -155,4 +172,50 @@ export class UsertableComponent implements OnChanges, OnInit {
         // reset the form
         this.addForm.reset();
     }
+    displayDialog = false;
+
+   
+  showDialog() {
+    this.displayDialog = true;
+    this.submitted = false;
+  }
+
+  newHideDialog() {
+    this.displayDialog = false;
+    this.submitted = false;
+  }
+
+  submitForm() {
+    // Handle form submission
+    this.hideDialog();
+  }
+  saveUser() {
+    if (this.SignUpForm.valid) {
+        this.messageService.add({
+            severity: "success",
+            summary: "Success",
+            detail: `Registered! Verify your email.`,
+        });
+    }
+
+    console.log(this.userInfo.email);
+    console.log(this.userInfo.firstName);
+
+    console.log(this.userInfo.lastName);
+    console.log(this.userInfo.password);
+    // this.userInfo.password=this.password;
+    // this.userInfo.email= this.email;
+
+    console.log(this.userInfo);
+
+    this.uploadFileService
+        .authService("register", this.userInfo)
+        .subscribe((response: any) => {
+            console.log(response);
+            
+        });
+
+        this.displayDialog = false;
+    this.submitted = false;
+}
 }
