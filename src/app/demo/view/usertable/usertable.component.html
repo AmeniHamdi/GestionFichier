@@ -6,7 +6,7 @@
       </ng-template>
     </p-toolbar>
    
-    <p-dialog header="Sign Up" [(visible)]="displayDialog" [modal]="true" [responsive]="true" >
+    <p-dialog header="Add user" [(visible)]="displayDialog" [modal]="true" [responsive]="true" >
         <form [formGroup]="SignUpForm" (ngSubmit)="submitForm()" class="form-container">
             <div class="login-input-wrapper">
                 <input type="text" autocomplete="off" placeholder="First Name" formControlName="firstName" [(ngModel)]="userInfo.firstName"
@@ -36,13 +36,15 @@
                 <input type="password" autocomplete="off" placeholder="Password" formControlName="password" [(ngModel)]="userInfo.password
             " pInputText>
                 <i class="pi pi-lock"></i>
-                <span *ngIf="SignUpForm.get('password')?.errors?.['required'] && SignUpForm.get('password')?.touched  " class="help-block" > password required</span>
-                <span *ngIf=" SignUpForm.get('password')?.value!='' && SignUpForm.get('password')?.errors?.['minlength'].requiredLength > SignUpForm.get('password')?.errors?.['minlength'].actualLength " class="help-block" > password less then 8</span>
+                <span *ngIf="SignUpForm.get('password')?.errors?.required && SignUpForm.get('password')?.touched" class="help-block">password required</span>
+                <span *ngIf="SignUpForm.get('password')?.errors?.minlength && SignUpForm.get('password')?.touched" class="help-block">password must be at least 8 characters long</span>
+                
 
             </div>
-
+            <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+            <span>{{SignUpForm.valid}}</span>
           <div class="form-buttons">
-            <button type="submit" pButton label="Submit" (click)="saveUser()" ></button>
+            <button type="submit" pButton label="Add" (click)="saveUser()" [disabled]="!SignUpForm.valid" ></button>
             <button type="button" (click)="newHideDialog()" pButton label="Cancel" class="p-button-secondary"></button>
           </div>
         </form>

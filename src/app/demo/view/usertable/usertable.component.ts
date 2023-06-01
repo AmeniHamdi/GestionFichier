@@ -45,6 +45,7 @@ export class UsertableComponent implements OnChanges, OnInit {
     @Output() onSave = new EventEmitter();
     @Output() onInputUpdated = new EventEmitter<string>();
 
+    errorMessage: string;
     userDialog: boolean;
     product: any;
     submitted: boolean;
@@ -62,7 +63,7 @@ export class UsertableComponent implements OnChanges, OnInit {
             Validators.required,
             Validators.minLength(8),
         ]),
-        confirmPassword: new FormControl ('', Validators.required),
+        //confirmPassword: new FormControl ('', Validators.required),
     });
     userInfo: user = { firstName: "", lastName: "", password: "", email: "" };
 
@@ -189,33 +190,42 @@ export class UsertableComponent implements OnChanges, OnInit {
     // Handle form submission
     this.hideDialog();
   }
-  saveUser() {
-    if (this.SignUpForm.valid) {
-        this.messageService.add({
+saveUser() {
+    this.uploadFileService.authService("register", this.userInfo).subscribe(
+      (response) => {
+        // Handle successful response
+        if (response.error) {
+          // Display error message to the user
+          this.messageService.add({
+            severity: "error",
+            summary: "Error",
+            detail: `User already exist`,
+        });
+        this.SignUpForm.reset();
+        this.displayDialog=false;
+        } else {
+          console.log('User saved successfully:', response);
+          this.messageService.add({
             severity: "success",
             summary: "Success",
-            detail: `Registered! Verify your email.`,
+            detail: `User saved successfully.`,
         });
-    }
+        this.SignUpForm.reset();
+        this.displayDialog=false;
 
-    console.log(this.userInfo.email);
-    console.log(this.userInfo.firstName);
-
-    console.log(this.userInfo.lastName);
-    console.log(this.userInfo.password);
-    // this.userInfo.password=this.password;
-    // this.userInfo.email= this.email;
-
-    console.log(this.userInfo);
-
-    this.uploadFileService
-        .authService("register", this.userInfo)
-        .subscribe((response: any) => {
-            console.log(response);
-            
+        }
+      },
+      (error) => {
+        // Handle error response
+        console.error('Error saving user:', error);
+        this.messageService.add({
+            severity: "error",
+            summary: "Error",
+            detail: `User already added`,
         });
-
-        this.displayDialog = false;
-    this.submitted = false;
-}
+      }
+    );
+  }
+  
+  
 }
