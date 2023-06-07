@@ -44,7 +44,7 @@ export class UsertableComponent implements OnChanges, OnInit {
     @Output() sortFunction = new EventEmitter<SortEvent>();
     @Output() onSave = new EventEmitter();
     @Output() onInputUpdated = new EventEmitter<string>();
-
+    
     errorMessage: string;
     userDialog: boolean;
     product: any;
@@ -66,7 +66,8 @@ export class UsertableComponent implements OnChanges, OnInit {
         //confirmPassword: new FormControl ('', Validators.required),
     });
     userInfo: user = { firstName: "", lastName: "", password: "", email: "" };
-
+    
+    
     constructor(
         private router: Router,
         private uploadFileService: UploadFileService,
@@ -74,6 +75,7 @@ export class UsertableComponent implements OnChanges, OnInit {
         private adminService: AdminService,
         private messageService: MessageService
     ) {}
+     
 
     handleInput(searchTerm: string) {
         this.throttledInput.next(searchTerm);
@@ -101,7 +103,7 @@ export class UsertableComponent implements OnChanges, OnInit {
             }, {})
         );
     }
-
+    
     onRowEditInit(product: any) {
         this.clonedUsers[product.id] = { ...product };
     }
@@ -190,8 +192,8 @@ export class UsertableComponent implements OnChanges, OnInit {
     // Handle form submission
     this.hideDialog();
   }
-saveUser() {
-    this.uploadFileService.authService("register", this.userInfo).subscribe(
+  saveUser() {
+     this.uploadFileService.authService("register", this.userInfo).subscribe(
       (response) => {
         // Handle successful response
         if (response.error) {
@@ -228,4 +230,6 @@ saveUser() {
   }
   
   
+  
 }
+

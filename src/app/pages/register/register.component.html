@@ -49,7 +49,7 @@ pInputText>
                 <span *ngIf=" SignUpForm.get('confirmPassword')?.value !==SignUpForm.get('password')?.value " class="help-block" >Passwords does not matches</span>
             </div>
 
-            <button  pButton type="button" label="Sign Up" (click)="saveUser()"></button>
+            <button  pButton type="button" label="Sign Up"  [disabled]="SignUpForm.invalid" (click)="saveUser()"></button>
 
         </div>
     </form>

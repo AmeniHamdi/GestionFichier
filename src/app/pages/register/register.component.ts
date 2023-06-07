@@ -42,13 +42,7 @@ export class RegisterComponent {
     // }
 
     saveUser() {
-        if (this.SignUpForm.valid) {
-            this.messageService.add({
-                severity: "success",
-                summary: "Success",
-                detail: `Registered! Verify your email.`,
-            });
-        }
+       
 
         console.log(this.userInfo.email);
         console.log(this.userInfo.firstName);
@@ -63,8 +57,24 @@ export class RegisterComponent {
         this.uploadFileService
             .authService("register", this.userInfo)
             .subscribe((response: any) => {
+                if (response.error) {
+                    // Display error message to the user
+                    this.messageService.add({
+                      severity: "error",
+                      summary: "Error",
+                      detail: `User already exist`,
+                  });
+                 
+                }
+                else
+                {
+                    this.messageService.add({
+                        severity: "success",
+                        summary: "Success",
+                        detail: `Registered! Verify your email.`,
+                    });
                 console.log(response);
                 this.router.navigate(['/login']);
-            });
+            }});
     }
 }
