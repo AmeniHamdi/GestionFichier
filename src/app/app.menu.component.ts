@@ -60,15 +60,15 @@ export class AppMenuComponent implements OnInit {
             //         {label: 'PrimeFlex', icon: 'pi pi-fw pi-desktop', url: ['https://www.primefaces.org/primeflex/'], target: '_blank'},
             //     ]
             // },
-            {
-                label: 'Connexion', icon: 'pi pi-fw pi-copy', routerLink: ['/pages'],
-                items: [
+            // {
+            //     label: 'Connexion', icon: 'pi pi-fw pi-copy', routerLink: ['/pages'],
+            //     items: [
                     // {label: 'Crud', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/crud']},
                     // {label: 'Calendar', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/pages/calendar']},
                     // {label: 'Timeline', icon: 'pi pi-fw pi-calendar', routerLink: ['/pages/timeline']},
                     // {label: 'Landing', icon: 'pi pi-fw pi-globe', url: 'assets/pages/landing.html', target: '_blank'},
-                    {label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/login']},
-                    {label: 'Sign Up', icon: 'pi pi-fw pi-sign-in', routerLink: ['/']},
+                    // {label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/login']},
+                    // {label: 'Sign Up', icon: 'pi pi-fw pi-sign-in', routerLink: ['/']},
                     // {label: 'Invoice', icon: 'pi pi-fw pi-dollar', routerLink: ['/pages/invoice']},
                     // {label: 'Help', icon: 'pi pi-fw pi-question-circle', routerLink: ['/pages/help']},
                     // {label: 'Wizard', icon: 'pi pi-fw pi-star-fill', routerLink: ['/wizard']},
@@ -76,8 +76,8 @@ export class AppMenuComponent implements OnInit {
                     // {label: 'Not Found', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/notfound']},
                     // {label: 'Access Denied', icon: 'pi pi-fw pi-lock', routerLink: ['/access']},
                     // {label: 'Empty', icon: 'pi pi-fw pi-circle-off', routerLink: ['/pages/empty']}
-                ]
-            },
+            //     ]
+            // },
             // {
             //     label: 'Hierarchy', icon: 'pi pi-fw pi-align-left',
             //     items: [

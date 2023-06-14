@@ -42,7 +42,7 @@
 
             </div>
             <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-            <span>{{SignUpForm.valid}}</span>
+            
           <div class="form-buttons">
             <button type="submit" pButton label="Add" (click)="saveUser()" [disabled]="!SignUpForm.valid" ></button>
             <button type="button" (click)="newHideDialog()" pButton label="Cancel" class="p-button-secondary"></button>
