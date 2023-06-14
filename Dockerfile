@@ -16,6 +16,7 @@ WORKDIR /dist/src/app
 # Copy files to virtual directory
 # COPY package.json package-lock.json ./
 # Run command in Virtual directory
+RUN npm install
 RUN npm cache clean --force
 # Copy files from local machine to virtual directory in docker image
 COPY . .
