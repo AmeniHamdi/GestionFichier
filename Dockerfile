@@ -18,6 +18,8 @@ WORKDIR /dist/src/app
 # Run command in Virtual directory
 RUN apt-get update
 RUN apt-get -y install nodejs
+RUN apt-get -y install npm
+
 RUN npm cache clean --force
 # Copy files from local machine to virtual directory in docker image
 COPY . .
