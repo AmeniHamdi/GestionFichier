@@ -16,7 +16,7 @@ export class UploadFileService {
 
   private baseUrl = 'http://localhost:8087/api/csv';
   private authUrl ='http://localhost:8087/auth';
-  
+  private kafkaUrl = 'http://localhost:29092/api/csv';
   constructor(private http: HttpClient,private router: Router) { }
 
   //Upload a csv file
