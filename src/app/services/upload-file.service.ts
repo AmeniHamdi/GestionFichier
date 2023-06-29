@@ -27,7 +27,7 @@ export class UploadFileService {
 
       // const url = data === "tier" ? `${this.baseUrl}/${data}/test-kafka` : `${this.baseUrl}/${data}/upload`
 
-      const req = new HttpRequest('POST', `${this.baseUrl}/kafka/upload`, formData, {
+      const req = new HttpRequest('POST', `${this.kafkaUrl}/kafka/upload`, formData, {
         reportProgress: true,
         responseType: 'json'
       });
