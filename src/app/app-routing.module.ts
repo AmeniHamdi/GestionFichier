@@ -42,7 +42,7 @@ import { AdminPanelComponent } from './demo/view/adminpanel.component';
             {
                 path: 'uikit', component: AppMainComponent,
                 children: [
-                    {path: 'dashboard', component: DashboardDemoComponent},
+                    {path: 'dashboard', component: DashboardDemoComponent, canActivate: [AdminAccessGuard]},
                     {path: 'formlayout', component: FormLayoutDemoComponent},
                     {path: 'floatlabel', component: FloatLabelDemoComponent},
                     {path: 'invalidstate', component: InvalidStateDemoComponent},
